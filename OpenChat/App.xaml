@@ -1,0 +1,18 @@
+﻿<Application x:Class="OpenChat.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:OpenChat">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+                <ResourceDictionary Source="/Resources/AnimationStyles.xaml" />
+                <ResourceDictionary Source="/Resources/ControlStyles/All.xaml" />
+                <ResourceDictionary Source="/Converters/SingletonConverters.xaml" />
+
+                <ResourceDictionary Source="/ColorModes/LightMode.xaml" />
+                <ResourceDictionary Source="/Languages/en.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

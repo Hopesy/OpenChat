@@ -1,0 +1,240 @@
+﻿<Page x:Class="OpenChat.Views.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:controls="clr-namespace:OpenChat.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:OpenChat.Views.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:s="clr-namespace:System;assembly=mscorlib"
+      xmlns:utilities="clr-namespace:OpenChat.Utilities"
+      xmlns:vm="clr-namespace:OpenChat.ViewModels"
+      Title="MainPage"
+      d:Background="White"
+      d:DataContext="{d:DesignInstance Type=local:MainPage}"
+      d:DesignHeight="600"
+      d:DesignWidth="880"
+      FocusVisualStyle="{x:Null}"
+      Style="{DynamicResource AnimatedPageStyle}"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <!-- 在DataTemplate\ContextMenu\ListBoxItem内部DataContext会指向当前的数据项而不是原来页面的数据上下文 -->
+        <!-- 定义了个依赖属性保存当前Page的数据上下文DataContext，用于在DataTemplate绑定 -->
+        <!-- 将当前页面的DataContext通过BindingProxy的依赖属性Data传递出去,在需要的地方使用 -->
+        <!-- MainPage的DataContext就是其本身this,构造函数里面注入了MainPageModel -->
+        <utilities:BindingProxy x:Key="PageSelf" Data="{Binding}" />
+    </Page.Resources>
+    <Page.InputBindings>
+        <KeyBinding Key="R" Command="{Binding ResetChatCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="T" Command="{Binding NewSessionCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="N" Command="{Binding NewSessionCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="W" Command="{Binding DeleteCurrentSessionCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="K" Command="{Binding SwitchToPreviousSessionCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="J" Command="{Binding SwitchToNextSessionCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="Tab" Command="{Binding CycleSwitchToPreviousSessionCommand}" Modifiers="Ctrl+Shift" />
+        <KeyBinding Key="Tab" Command="{Binding CycleSwitchToNextSessionCommand}" Modifiers="Ctrl" />
+    </Page.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!-- 上部标题栏和按钮 -->
+        <Grid Grid.Row="0">
+            <Border Padding="5" BorderBrush="{DynamicResource GeneralBorder}" BorderThickness="0,0,0,1" />
+            <Grid>
+                <TextBlock FontSize="{DynamicResource ExtremLargeFontSize}" Foreground="{DynamicResource FontForeground}" Text="{DynamicResource StrChat}" />
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Margin="0,0,3,0" Padding="3"
+                            Background="{DynamicResource ControlBackground}"
+                            BorderThickness="0"
+                            Command="{Binding ResetChatCommand}"
+                            Content="♻"
+                            Foreground="{DynamicResource FontForeground}">
+                        <Button.ToolTip>
+                            <TextBlock>
+                                <Run Text="{DynamicResource StrResetChat}" />
+                                <Run Text="(Ctrl+R)" />
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Padding="3"
+                            Background="{DynamicResource ControlBackground}"
+                            BorderThickness="0"
+                            Command="{Binding GoToConfigPageCommand}"
+                            Content="⚙︎"
+                            Foreground="{DynamicResource FontForeground}"
+                            ToolTip="{DynamicResource StrGoToConfigurationPage}" />
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+        <!-- 下部内容 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" MinWidth="80" />
+                <ColumnDefinition Width="2" />
+                <ColumnDefinition Width="139*" />
+                <ColumnDefinition Width="590*" />
+            </Grid.ColumnDefinitions>
+            <!-- 左侧消息列表 -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ScrollViewer Name="sessionsScrollViewer" Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <!-- Stretch控件会水平拉伸以填满其父容器分配的可用空间 -->
+                    <!-- AppGlobalData属性定义在后台文件中 -->
+                    <!-- Sessions=ObservableCollection<ChatSessionModel;SelectedSession=ChatSessionModel -->
+                    <ListBox Margin="0" Padding="0" HorizontalAlignment="Stretch"
+                             d:ItemsSource="{d:SampleData ItemCount=5}"
+                             Background="{DynamicResource GeneralBackground}"
+                             BorderThickness="0"
+                             ItemsSource="{Binding AppGlobalData.Sessions}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectedIndex="0"
+                             SelectedItem="{Binding AppGlobalData.SelectedSession}">
+                        <!-- 这里使用了behavior来实现事件触发命令绑定,behavior库实际上是附加属性的进一步封装 -->
+                        <!-- 监听SelectionChanged事件实现择会话时切换到对应的聊天页面 -->
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="SelectionChanged">
+                                <!-- 因为后台有当前会话信息所以不需要参数 -->
+                                <behaviors:InvokeCommandAction Command="{Binding SwitchPageToCurrentSessionCommand}" />
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                        <!-- 单条数据的显示样式(渲染模板) -->
+                        <ListBox.ItemContainerStyle>
+                            <!-- 数据载入的时候加个位移动画 -->
+                            <Style BasedOn="{StaticResource AnimatedListItemStyle}" TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border Padding="5" Background="{TemplateBinding Background}">
+                                                <!-- 单条数据的占位符 -->
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource SessionHoverBackground}" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource SessionSelectedBackgroun}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <!-- 单条数据的模板 -->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DataTemplate.Resources>
+                                    <!-- DataTemplate的DataContext是绑定的数据本身ChatSessionModel内部保存了当前选中的对话信息 -->
+                                    <!-- StartEditCommand\ConfigCommand定义此,因此编辑的啥时候不需要传递参数 -->
+                                    <!-- DeleteSessionCommand定义在MainPage.xaml.cs中,CommandParameter就是当前的数据上下文ChatSessionModel -->
+                                    <!-- MainPage的DataContext就是其本身,然后通过Data传递到DataTemplate中 -->
+                                    <ContextMenu x:Key="SessionContextMenu">
+                                        <MenuItem Command="{Binding StartEditCommand}" Header="{DynamicResource StrEdit}" />
+                                        <MenuItem Command="{Binding ConfigCommand}" Header="{DynamicResource StrConfig}" />
+                                        <MenuItem Command="{Binding Data.DeleteSessionCommand, Source={StaticResource PageSelf}}" CommandParameter="{Binding}" Header="{DynamicResource StrDelete}" />
+                                    </ContextMenu>
+                                </DataTemplate.Resources>
+                                <StackPanel Background="Transparent" ContextMenu="{StaticResource SessionContextMenu}">
+                                    <StackPanel.InputBindings>
+                                        <!-- 鼠标中键触发删除命令 -->
+                                        <MouseBinding Command="{Binding Data.DeleteSessionCommand, Source={StaticResource PageSelf}}" CommandParameter="{Binding}" MouseAction="MiddleClick" />
+                                    </StackPanel.InputBindings>
+                                    <!-- IsHitTestVisible根据编辑状态控制是否可交互 -->
+                                    <!-- IsReadOnly根据只读状态控制编辑功能 -->
+                                    <TextBox Padding="0" Background="Transparent" BorderThickness="1"
+                                             FontSize="{DynamicResource NormalFontSize}"
+                                             Foreground="{DynamicResource FontForeground}"
+                                             IsHitTestVisible="{Binding IsEditing}"
+                                             IsReadOnly="{Binding IsReadOnly}"
+                                             Text="{Binding Name, TargetNullValue='新对话'}">
+                                        <!-- 在重命名标题时候失去焦点自动结束编辑状态 -->
+                                        <behaviors:Interaction.Triggers>
+                                            <behaviors:EventTrigger EventName="LostFocus">
+                                                <behaviors:InvokeCommandAction Command="{Binding EndEditCommand}" />
+                                            </behaviors:EventTrigger>
+                                        </behaviors:Interaction.Triggers>
+                                        <!-- 添加键盘快捷键 -->
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding EndEditCommand}" />
+                                        </TextBox.InputBindings>
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox">
+                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsReadOnly" Value="False">
+                                                        <Setter Property="BorderBrush" Value="#569de5" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                    <!-- TextTrimming="CharacterEllipsis"文字太长时显示三个点... -->
+                                    <!-- 使用两个Run元素分别显示消息发送者名称和内容 -->
+                                    <!-- 无内容时显示"Empty" -->
+                                    <TextBlock Padding="3,0" HorizontalAlignment="Stretch" Background="Transparent"
+                                               FontSize="{DynamicResource SmallFontSize}"
+                                               Foreground="{DynamicResource FontForegroundLight}"
+                                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap">
+                                        <TextBlock.Resources>
+                                            <s:String x:Key="SessionMessageNameFormat">{0}:</s:String>
+                                        </TextBlock.Resources>
+                                        <Run Text="{Binding PageModel.LastMessage.DisplayName, Mode=OneWay, StringFormat={StaticResource SessionMessageNameFormat}}" />
+                                        <Run Text="{Binding PageModel.LastMessage.SingleLineContent, Mode=OneWay, FallbackValue='空值'}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+                <Button Grid.Row="1" Padding="0,3"
+                        Background="{DynamicResource ControlBackground}"
+                        BorderThickness="0"
+                        Command="{Binding NewSessionCommand}"
+                        Content="{DynamicResource StrNewSession}"
+                        Foreground="{DynamicResource FontForeground}">
+                    <Button.ToolTip>
+                        <TextBlock>
+                            <Run Text="{DynamicResource StrNewSession}" />
+                            <Run Text="(Ctrl+T/N)" /></TextBlock>
+                    </Button.ToolTip>
+                </Button>
+            </Grid>
+            <!-- 中间左右拖动组件，运行时动态调节左侧右侧宽度 -->
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch">
+                <GridSplitter.Style>
+                    <!-- 内联属性>样式触发器>样式Setter -->
+                    <Style TargetType="GridSplitter">
+                        <Setter Property="Background" Value="{DynamicResource GeneralBorder}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF0078D7" />
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="True">
+                                <Setter Property="Background" Value="#FF005A9E" />
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </GridSplitter.Style>
+            </GridSplitter>
+            <!-- 右侧Frame承载聊天页面 -->
+            <Frame Grid.Column="2" Grid.ColumnSpan="2"
+                   Content="{Binding ViewModel.CurrentChat}"
+                   NavigationUIVisibility="Hidden" />
+        </Grid>
+    </Grid>
+</Page>

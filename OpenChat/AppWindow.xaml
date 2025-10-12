@@ -1,0 +1,89 @@
+﻿<Window x:Class="OpenChat.AppWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:controls="clr-namespace:OpenChat.Controls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:hotkey="https://wpf.elecho.org/globalhotkey"
+        xmlns:local="clr-namespace:OpenChat"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mybehaviors="clr-namespace:OpenChat.Behaviors"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:utils="clr-namespace:OpenChat.Utilities"
+        Title="{Binding ViewModel.ApplicationTitle}"
+        Width="880"
+        Height="600"
+        d:DataContext="{d:DesignInstance Type=local:AppWindow}"
+        Background="{DynamicResource GeneralBackground}"
+        FontSize="{DynamicResource NormalFontSize}"
+        Foreground="{DynamicResource FontForeground}"
+        Icon="assets/images/openai.png"
+        Topmost="{Binding ViewModel.Configuration.WindowAlwaysOnTop}"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="bool2visbility" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="H" Command="{x:Static local:App.HideAppCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="H" hotkey:GlobalHotkey.IsRegistered="True"
+                    Command="{x:Static local:App.ShowAppCommand}"
+                    Modifiers="Ctrl+Shift" />
+    </Window.InputBindings>
+    <!-- 这里是给Windows添加一个自定义Behavior来处理主题 -->
+    <behaviors:Interaction.Behaviors>
+        <mybehaviors:WindowStyleManagerBehavior />
+    </behaviors:Interaction.Behaviors>
+
+    <Grid>
+        <!-- 承载主页面，导航控件，项目初始化后导航到MainPage -->
+        <Frame Name="appFrame" NavigationUIVisibility="Visible" />
+        <!-- 自定义悬浮通知功能，在页面上方通知信息如未设置APIkey等 -->
+        <!-- NoteControl的template定义在Themes/Generic.xaml中 -->
+        <!-- 同一个Grid单元格中使用后来居上的层叠原理，实现了漂浮在页面上方而不压缩现有空间的效果 -->
+        <controls:NoteControl x:Name="appNote" Margin="50,0" HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Background="{DynamicResource BoxBackground}"
+                              BorderThickness="1,0,1,1"
+                              Show="{Binding NoteService.Data.Show}"
+                              Text="{Binding NoteService.Data.Text}"
+                              Visibility="Hidden">
+            <!-- Behavior代码是为NoteControl添加点击关闭功能的，当然也可以写在后端代码中 -->
+            <!-- 当用户点击NoteControl时，自动调用NoteService的Close方法来关闭通知 -->
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="MouseDown">
+                    <behaviors:CallMethodAction MethodName="Close" TargetObject="{Binding NoteService}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+
+            <controls:NoteControl.Style>
+                <Style TargetType="controls:NoteControl">
+                    <Setter Property="BorderBrush" Value="{DynamicResource BoxBorder}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="IndianRed" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:NoteControl.Style>
+
+        </controls:NoteControl>
+        <!-- 系统托盘图标，支持最小化到托盘、从托盘恢复窗口等操作 -->
+        <tb:TaskbarIcon Name="appIcon"
+                        DataContext="{Binding}"
+                        DoubleClickCommand="{x:Static local:App.ShowAppCommand}"
+                        IconSource="assets/images/openai.ico"
+                        LeftClickCommand="{x:Static local:App.ShowAppCommand}"
+                        ToolTipText="{x:Null}">
+            <!-- 系统托盘右键菜单 -->
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu utils:UiUtils.CornerRadius="3">
+                    <MenuItem Command="{x:Static local:App.ShowAppCommand}" Header="Show" />
+                    <MenuItem Command="{x:Static local:App.HideAppCommand}" Header="Hide" />
+                    <MenuItem Command="{x:Static local:App.CloseAppCommand}" Header="Close" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+
+        </tb:TaskbarIcon>
+    </Grid>
+</Window>

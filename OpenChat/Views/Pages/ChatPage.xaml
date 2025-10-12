@@ -1,0 +1,192 @@
+﻿<Page x:Class="OpenChat.Views.Pages.ChatPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:controls="clr-namespace:OpenChat.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:OpenChat.Views.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:utilities="clr-namespace:OpenChat.Utilities"
+      Title="ChatPage"
+      d:Background="White"
+      d:DataContext="{d:DesignInstance Type=local:ChatPage}"
+      d:DesignHeight="600"
+      d:DesignWidth="730"
+      FocusVisualStyle="{x:Null}"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <!-- Page的DataContext就是自己的后台代码 -->
+        <!-- 用于在DataTemplate中访问外层Page的DataContext -->
+        <utilities:BindingProxy x:Key="PageProxy" Data="{Binding}" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="130" />
+        </Grid.RowDefinitions>
+        <!-- 【1】上部会话消息展示列表 -->
+        <!-- 滚动到顶部自动加载更多历史消息;接收消息时自动滚动到底部;虚拟化渲染提升性能 -->
+        <ScrollViewer Name="messagesScrollViewer" HorizontalScrollBarVisibility="Disabled" VirtualizingPanel.CacheLengthUnit="Pixel"
+                      VirtualizingPanel.ScrollUnit="Pixel">
+            <behaviors:Interaction.Triggers>
+                <!-- 记载完成后页面滚动到底部 -->
+                <behaviors:EventTrigger EventName="Loaded">
+                    <behaviors:CallMethodAction MethodName="ScrollToEnd" />
+                </behaviors:EventTrigger>
+                <!-- 滚动变化时检查是否需要自动滚动 -->
+                <behaviors:EventTrigger EventName="ScrollChanged">
+                    <behaviors:InvokeCommandAction Command="{Binding ScrollToEndWhileReceivingCommand}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+            <!-- 绑定的是ChatMessageModel列表，而不是ChatMessage -->
+            <ItemsControl Name="messages" Padding="10,10,10,20"
+                          d:ItemsSource="{d:SampleData ItemCount=5}"
+                          ItemsSource="{Binding ViewModel.Messages}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- 启用虚拟化渲染提高性能 -->
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- 自定义聊天气泡 -->
+                        <!-- 同一个模板通过改变左对齐右对齐区分是用户的消息还是AI发送的消息 -->
+                        <controls:ChatBubble HorizontalAlignment="{Binding SelfAlignment}"
+                                             HorizontalContentAlignment="{Binding SelfAlignment}"
+                                             BorderThickness="1"
+                                             Content="{Binding Content, Mode=TwoWay}"
+                                             ContentBackground="{DynamicResource ChatBubbleBackground}"
+                                             ContentForeground="{DynamicResource FontForeground}"
+                                             CornerRadius="{Binding SelfCornorRadius}"
+                                             IsReadonly="{Binding IsReadOnly}"
+                                             Username="{Binding DisplayName}">
+                            <controls:ChatBubble.Style>
+                                <Style BasedOn="{StaticResource AnimatedChatBubble}" TargetType="controls:ChatBubble">
+                                    <Setter Property="HeaderForeground" Value="Gray" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ChatBubbleBorder}" />
+                                    <Style.Triggers>
+                                        <!-- 非只读状态（编辑中）显示蓝色边框 -->
+                                        <Trigger Property="IsReadonly" Value="False">
+                                            <Setter Property="HeaderForeground" Value="#569de5" />
+                                            <Setter Property="BorderBrush" Value="#569de5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:ChatBubble.Style>
+                            <behaviors:Interaction.Triggers>
+                                <!-- 双击进入编辑状态 -->
+                                <behaviors:EventTrigger EventName="MouseDoubleClick">
+                                    <behaviors:InvokeCommandAction Command="{Binding StartEditCommand}" />
+                                </behaviors:EventTrigger>
+                                <!-- 失去焦点退出编辑状态 -->
+                                <behaviors:EventTrigger EventName="LostFocus">
+                                    <behaviors:InvokeCommandAction Command="{Binding EndEditCommand}" />
+                                </behaviors:EventTrigger>
+                            </behaviors:Interaction.Triggers>
+                            <!-- 每条消息都提供右键编辑菜单 -->
+                            <controls:ChatBubble.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding CopyCommand}" Header="{DynamicResource StrCopy}" />
+                                    <MenuItem Command="{Binding StartEditCommand}" Header="{DynamicResource StrEdit}" />
+                                    <MenuItem Header="{DynamicResource StrDelete}">
+                                        <!-- 删除当前消息 -->
+                                        <!-- Data通过代理传递当前Page的DataContext(其中定义了Command),而不是使用DataTemplate默认的上下文(单条数据) -->
+                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewModel.DeleteMessageCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrThis}" />
+                                        <!-- 删除此消息之前的所有消息 -->
+                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewModel.DeleteMessagesAboveCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrAllAbove}" />
+                                        <!-- 删除此消息之后的所有消息 -->
+                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewModel.DeleteMessagesBelowCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrAllBelow}" />
+                                    </MenuItem>
+                                </ContextMenu>
+                            </controls:ChatBubble.ContextMenu>
+                        </controls:ChatBubble>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <!-- 【2】底部信息输入框 -->
+        <Grid Grid.Row="1" MinHeight="60">
+            <!-- FocusUtils.IsAutoLogicFocus附加属性，自动调用回调方法在控件加载完毕后设置键盘焦点Keyboard.Focus(element) -->
+            <!-- DataContext是后台cs文件，里面定义了ViewModel -->
+            <TextBox Name="inputBox" Padding="5" utilities:FocusUtils.IsAutoLogicFocus="True"
+                     AcceptsReturn="True" BorderThickness="0,1,0,0" FontSize="14"
+                     Text="{Binding ViewModel.InputBoxText, UpdateSourceTrigger=PropertyChanged}"
+                     TextWrapping="Wrap">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding ChatCommand}" Modifiers="Ctrl" />
+                    <KeyBinding Key="Return" Command="{Binding CancelCommand}" Modifiers="Ctrl+Shift" />
+                </TextBox.InputBindings>
+            </TextBox>
+            <!-- 聊天命令正在执行时ChatCommand.IsRunning=True显示取消按钮CancelCommand，没在执行时显示发送按钮ChatCommand -->
+            <controls:ConditionalControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Condition="{Binding ChatCommand.IsRunning}">
+                <controls:ConditionalControl.ElementWhileFalse>
+                    <Button Margin="10" Padding="10,5"
+                            Command="{Binding ChatCommand}"
+                            Content="{DynamicResource StrSend}">
+                        <Button.ToolTip>
+                            <TextBlock>
+                                <Run Text="{DynamicResource StrSendMessage}" />
+                                <Run Text="(Ctrl+Enter)" />
+                            </TextBlock>
+                        </Button.ToolTip>
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="3" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </controls:ConditionalControl.ElementWhileFalse>
+                <!-- WPF中只有极少数控件有CornerRadius圆角属性如如Border和AdornerDecorator -->
+                <!-- UiUtils.CornerRadius同样是个附加属性,为那些本身没有CornerRadius圆角属性的复杂控件如Button、TextBox等设置圆角效果 -->
+                <controls:ConditionalControl.ElementWhileTrue>
+                    <Button Margin="10" Padding="10,5" utilities:UiUtils.CornerRadius="3"
+                            Command="{Binding CancelCommand}"
+                            Content="{DynamicResource StrCancel}"
+                            Style="{StaticResource SecondaryButton}">
+                        <Button.ToolTip>
+                            <TextBlock>
+                                <Run Text="{DynamicResource StrCancelSendingMessage}" />
+                                <Run Text="(Ctrl+Shift+Enter)" />
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+                </controls:ConditionalControl.ElementWhileTrue>
+            </controls:ConditionalControl>
+        </Grid>
+        <!-- 上下拖动布局调整条 -->
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <GridSplitter.Style>
+                <Style TargetType="GridSplitter">
+                    <!-- 属性只有定义在这里，触发器的效果才能生效，因为内联定义优先级更高会覆盖触发器 -->
+                    <Setter Property="Height" Value="3" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Height" Value="5" />
+                            <Setter Property="Background" Value="Blue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </GridSplitter.Style>
+        </GridSplitter>
+        <!-- 聊天动画未被禁用且聊天命令正在执行时，显示一个加载圆圈动画 -->
+        <!-- ConfigurationService定义在DataContext中即后台代码中 -->
+        <!-- a.动画未被禁用时DisableChatAnimation为false，则处理内层逻辑 -->
+        <!-- b.当聊天命令正在运行时ChatCommand.IsRunning为true，显示加载圆圈动画 -->
+        <!-- c.在其样式定义中通过DataTrigger监听Condition属性的变化 -->
+        <controls:ConditionalControl Grid.Row="0" Condition="{Binding ConfigurationService.Configuration.DisableChatAnimation}">
+            <controls:ConditionalControl.ElementWhileFalse>
+                <!-- ElementWhileFalse/ElementWhileTrue都是FrameworkElement类型的 -->
+                <!-- 这里仅仅是赋值，最终是在Template里面展示的 -->
+                <controls:ConditionalControl Condition="{Binding ChatCommand.IsRunning}">
+                    <controls:ConditionalControl.ElementWhileTrue>
+                        <!-- 自定义控件圆圈加载动画 -->
+                        <controls:LoadingCircle Width="30" Margin="10" HorizontalAlignment="Center"
+                                                VerticalAlignment="Top" Foreground="Gray" />
+                    </controls:ConditionalControl.ElementWhileTrue>
+                </controls:ConditionalControl>
+            </controls:ConditionalControl.ElementWhileFalse>
+        </controls:ConditionalControl>
+    </Grid>
+</Page>
