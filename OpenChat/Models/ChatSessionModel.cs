@@ -5,18 +5,18 @@ using System.Windows;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using OpenChat.Models;
+using OpenChat.Entitys;
 using OpenChat.Services;
 using OpenChat.Views.Dialogs;
 using OpenChat.Views.Pages;
 using OpenChat.Utilities;
 using OpenChat.Views;
 
-namespace OpenChat.ViewModels;
+namespace OpenChat.ViewModels.Pages;
 
-public partial class ChatSessionViewModel : ObservableObject
+public partial class ChatSessionModel : ObservableObject
 {
-    public ChatSessionViewModel(ChatSession storage)
+    public ChatSessionModel(ChatSession storage)
     {
         Storage = storage;
         SetupStorage(storage);

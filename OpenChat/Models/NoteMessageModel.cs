@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace OpenChat.ViewModels
+namespace OpenChat.ViewModels.Pages
 {
-    public partial class NoteMessageViewModel : ObservableObject
+    public partial class NoteMessageModel : ObservableObject
     {
         [ObservableProperty]
         private string _text = string.Empty;

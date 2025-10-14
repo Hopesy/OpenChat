@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using OpenChat.Models;
+using OpenChat.Entitys;
 
 namespace OpenChat.ViewModels
 {

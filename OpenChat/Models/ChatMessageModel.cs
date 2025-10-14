@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using OpenChat.Models;
+using OpenChat.Entitys;
 using OpenChat.Services;
 
-namespace OpenChat.ViewModels
+namespace OpenChat.ViewModels.Pages
 {
     public partial class ChatMessageModel : ObservableObject
     {

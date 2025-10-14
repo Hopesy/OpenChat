@@ -1,7 +1,7 @@
 ﻿using System;
 using LiteDB;
 
-namespace OpenChat.Models
+namespace OpenChat.Entitys
 {   
     // 数据库文件路径默认在应用程序目录下的AppChatStorage.db
     // 存储用户消息
