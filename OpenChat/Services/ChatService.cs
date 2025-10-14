@@ -95,6 +95,7 @@ public class ChatService
     // }
     // 异步发送聊天消息并接收响应。sessionId会话的唯一标识符message用户发送的消息内容
     // messageHandler处理接收到的消息片段的回调函数
+    // string就是收到的消息片段，AI是流式回复的
     public Task<ChatDialogue> ChatAsync(Guid sessionId, string message, Action<string> messageHandler)
     {
         // 取消之前正在进行的聊天请求

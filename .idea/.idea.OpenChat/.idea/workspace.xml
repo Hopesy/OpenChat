@@ -9,7 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fae4809-858c-472a-b39b-0ba28abc5501" name="更改" comment="" />
+    <list default="true" id="9fae4809-858c-472a-b39b-0ba28abc5501" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models目录重构建议.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Models/ChatSessionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Models/ChatSessionModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/ChatService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/ViewModels/Pages/ChatPageViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/ViewModels/Pages/ChatPageViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/AppWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/AppWindow.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Dialogs/ChatSessionConfigDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Dialogs/ChatSessionConfigDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViewModel命名和职责分析.md" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +48,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/SourceGeneratedDocuments/F52B745A84017BB0BEADAE72/CommunityToolkit.Mvvm.SourceGenerators/CommunityToolkit.Mvvm.SourceGenerators.RelayCommandGenerator/OpenChat.Views.Pages.ChatPage.ChatAsync.g.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/OpenChat/ViewModels/Pages/ChatPageViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/OpenChat/Views/AppWindow.xaml.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -47,24 +62,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET 启动设置配置文件.OpenChat: OpenGptChat.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "rider.code.cleanup.on.save.profile": "Built-in: Reformat Code",
-    "settings.editor.selected.configurable": "preferences.general",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET 启动设置配置文件.OpenChat: OpenGptChat.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;rider.code.cleanup.on.save.profile&quot;: &quot;Built-in: Reformat Code&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET 启动设置配置文件.OpenChat: OpenGptChat">
     <configuration name="OpenChat: win32" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish publish_profile="win32.pubxml" pubxml_path="$PROJECT_DIR$/OpenChat/Properties/PublishProfiles/win32.pubxml" uuid_high="-5637352973152007355" uuid_low="-6197922639343528460" />
@@ -101,6 +116,8 @@
       <workItem from="1760277386525" duration="1044000" />
       <workItem from="1760366828663" duration="1654000" />
       <workItem from="1760409411993" duration="8150000" />
+      <workItem from="1760428289346" duration="2469000" />
+      <workItem from="1760449523660" duration="5524000" />
     </task>
     <servers />
   </component>

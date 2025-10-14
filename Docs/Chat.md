@@ -22,7 +22,7 @@ public void InitSession(Guid sessionId)
 {
     SessionId = sessionId;
     ViewModel.Messages.Clear();
-    
+
     // 从数据库加载最近 10 条历史消息
     foreach (var msg in ChatStorageService.GetLastMessages(SessionId, 10))
         ViewModel.Messages.Add(new ChatMessageModel(msg));
@@ -55,30 +55,30 @@ public async Task ChatAsync()
         _ = NoteService.ShowAndWaitAsync("输入信息不能为空", 1500);
         return;
     }
-    
+
     // 【验证 2】必须配置 API Key
     if (string.IsNullOrWhiteSpace(ConfigurationService.Configuration.ApiKey))
     {
         await NoteService.ShowAndWaitAsync("请先输入API Key再使用该服务", 3000);
         return;
     }
-    
+
     // 【启用自动滚动】如果当前已在底部，则打开自动滚动
     if (messagesScrollViewer.IsAtEnd())
         autoScrollToEnd = true;
-    
+
     // 【准备消息】
     var input = ViewModel.InputBoxText.Trim();
     ViewModel.InputBoxText = string.Empty;  // 立即清空输入框
-    
+
     // 【创建消息模型】
     var requestMessageModel = new ChatMessageModel("user", input);
     var responseMessageModel = new ChatMessageModel("assistant", string.Empty);
     var responseAdded = false;
-    
+
     // 【立即显示用户消息】
     ViewModel.Messages.Add(requestMessageModel);
-    
+
     // ... 进入阶段 3
 }
 ```
@@ -104,20 +104,20 @@ try
     {
         // 【流式回调】每收到一部分响应就更新 UI
         responseMessageModel.Content = content;
-        
+
         if (!responseAdded)
         {
             responseAdded = true;
-            Dispatcher.Invoke(() => { 
-                ViewModel.Messages.Add(responseMessageModel); 
+            Dispatcher.Invoke(() => {
+                ViewModel.Messages.Add(responseMessageModel);
             });
         }
     });
-    
+
     // 保存到数据库
     requestMessageModel.Storage = dialogue.Ask;
     responseMessageModel.Storage = dialogue.Answer;
-    
+
     // ... 进入阶段 5
 }
 catch (TaskCanceledException) { /* 用户取消 */ }
@@ -163,14 +163,14 @@ Task completionTask = client.ChatEndpoint.StreamCompletionAsync(
         if (!string.IsNullOrEmpty(content))
         {
             sb.Append(content);
-            
+
             // 移除开头空白字符
             while (sb.Length > 0 && char.IsWhiteSpace(sb[0]))
                 sb.Remove(0, 1);
-            
+
             // 【回调通知 ChatPage】更新 UI
             messageHandler.Invoke(sb.ToString());
-            
+
             lastTime = DateTime.Now;  // 更新最后响应时间
         }
     }, token);
@@ -181,11 +181,11 @@ Task completionTask = client.ChatEndpoint.StreamCompletionAsync(
 var cancelTask = Task.Run(async () =>
 {
     var timeout = TimeSpan.FromMilliseconds(ConfigurationService.Configuration.ApiTimeout);
-    
+
     while (!completionTask.IsCompleted)
     {
         await Task.Delay(100);
-        
+
         // 如果超过配置时间没有响应，则取消请求
         if (DateTime.Now - lastTime > timeout)
         {
@@ -219,13 +219,13 @@ OpenAI API 响应 → ChatService 回调 → Dispatcher 线程切换 → UI 更�
 content =>
 {
     responseMessageModel.Content = content;  // 直接更新内容
-    
+
     // 【首次添加】第一次收到响应时将 AI 消息添加到列表
     if (!responseAdded)
     {
         responseAdded = true;
-        Dispatcher.Invoke(() => { 
-            ViewModel.Messages.Add(responseMessageModel); 
+        Dispatcher.Invoke(() => {
+            ViewModel.Messages.Add(responseMessageModel);
         });
     }
 }
@@ -291,7 +291,7 @@ return new ChatDialogue(ask, answer);
 protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 {
     base.OnPropertyChanged(e);
-    
+
     // 【关键】如果有 Storage，则自动保存到数据库
     if (Storage != null)
     {
@@ -343,11 +343,11 @@ private void MessageScrolled(object sender, ScrollChangedEventArgs e)
 {
     if (e.OriginalSource != messagesScrollViewer)
         return;
-    
+
     // 到达顶部时自动开启自动滚动
     if (messagesScrollViewer.IsAtEnd())
         autoScrollToEnd = true;
-    
+
     // 【触发条件】滚动到顶部且有历史记录
     if (e.VerticalChange != 0 &&
         messages.IsLoaded && IsLoaded &&
@@ -357,17 +357,17 @@ private void MessageScrolled(object sender, ScrollChangedEventArgs e)
         // 加载更早的 10 条消息
         foreach (var msg in ChatStorageService.GetLastMessagesBefore(SessionId, 10, timestamp))
             ViewModel.Messages.Insert(0, new ChatMessageModel(msg));
-        
+
         // 【保持滚动位置】计算距离底部的偏移量
         var distanceFromEnd = messagesScrollViewer.ScrollableHeight - messagesScrollViewer.VerticalOffset;
-        
+
         // 延迟执行，等待布局完成后恢复滚动位置
         Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action<ScrollChangedEventArgs>(e =>
         {
             var sv = (ScrollViewer)e.Source;
             sv.ScrollToVerticalOffset(sv.ScrollableHeight - distanceFromEnd);
         }), e);
-        
+
         e.Handled = true;
     }
 }
@@ -387,14 +387,14 @@ private void CloseAutoScrollWhileMouseWheel(object sender, MouseWheelEventArgs e
 
 ### 6.4 错误回滚
 ```csharp
-void Rollback(ChatMessageModel requestMessageModel, 
-              ChatMessageModel responseMessageModel, 
+void Rollback(ChatMessageModel requestMessageModel,
+              ChatMessageModel responseMessageModel,
               string originInput)
 {
     // 移除已添加的消息
     ViewModel.Messages.Remove(requestMessageModel);
     ViewModel.Messages.Remove(responseMessageModel);
-    
+
     // 恢复输入框内容
     if (string.IsNullOrWhiteSpace(ViewModel.InputBoxText))
         ViewModel.InputBoxText = input;
@@ -416,7 +416,7 @@ public void Copy(string text)
 
 ## 🗂️ 核心服务总结
 
-### 1. ChatService 
+### 1. ChatService
 **核心聊天服务**
 
 **职责**：
@@ -715,7 +715,7 @@ await client.ChatEndpoint.StreamCompletionAsync(
 
 ### 3. Dispatcher 线程切换
 ```csharp
-Dispatcher.Invoke(() => 
+Dispatcher.Invoke(() =>
 {
     // UI 操作必须在主线程执行
     ViewModel.Messages.Add(responseMessageModel);
@@ -737,10 +737,10 @@ cancellation.Cancel();
 ```csharp
 // 使用 record 定义不可变数据
 public record class ChatMessage(
-    Guid Id, 
-    Guid SessionId, 
-    string Role, 
-    string Content, 
+    Guid Id,
+    Guid SessionId,
+    string Role,
+    string Content,
     DateTime Timestamp
 );
 

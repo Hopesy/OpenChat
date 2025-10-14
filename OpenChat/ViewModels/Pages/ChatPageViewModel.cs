@@ -8,14 +8,17 @@ using OpenChat.Services;
 namespace OpenChat.ViewModels.Pages;
 
 public partial class ChatPageViewModel : ObservableObject
-{
+{   
+    //调用ChatStorageService是为了和数据库同步
+    private readonly ChatStorageService _chatStorageService;
     public ChatPageViewModel(ChatStorageService chatStorageService)
     {
         _chatStorageService = chatStorageService;
         Messages.CollectionChanged += (s, e) => { OnPropertyChanged(nameof(LastMessage)); };
     }
+    //用户输入的提问信息
     [ObservableProperty] private string _inputBoxText = string.Empty;
-    private readonly ChatStorageService _chatStorageService;
+    //ChatPage渲染的消息列表
     public ObservableCollection<ChatMessageModel> Messages { get; } = new();
     public ChatMessageModel? LastMessage => Messages.Count > 0 ? Messages.Last() : null;
     [RelayCommand]

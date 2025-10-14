@@ -10,14 +10,14 @@
         xmlns:mybehaviors="clr-namespace:OpenChat.Behaviors"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:utils="clr-namespace:OpenChat.Utilities"
-        Title="{Binding ViewViewModel.ApplicationTitle}"
+        Title="{Binding ViewModel.ApplicationTitle}"
         Width="880"
         Height="600"
         Background="{DynamicResource GeneralBackground}"
         FontSize="{DynamicResource NormalFontSize}"
         Foreground="{DynamicResource FontForeground}"
         Icon="/assets/images/openai.png"
-        Topmost="{Binding ViewViewModel.Configuration.WindowAlwaysOnTop}"
+        Topmost="{Binding ViewModel.Configuration.WindowAlwaysOnTop}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
     <Window.Resources>

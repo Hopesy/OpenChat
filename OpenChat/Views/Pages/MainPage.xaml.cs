@@ -12,21 +12,13 @@ namespace OpenChat.Views.Pages;
 // 主页面逻辑交互类
 public partial class MainPage : Page
 {
-    public MainPage(
-        AppWindow appWindow,
-        MainPageViewModel viewViewModel,
-        AppGlobalData appGlobalData,
-        PageService pageService,
-        NoteService noteService,
-        ChatService chatService,
-        ChatPageService chatPageService,
-        ChatStorageService chatStorageService,
-        ConfigurationService configurationService,
-        SmoothScrollingService smoothScrollingService)
+    public MainPage(AppWindow appWindow, MainPageViewModel viewModel, AppGlobalData appGlobalData,
+        PageService pageService, NoteService noteService, ChatService chatService, ChatPageService chatPageService,
+        ChatStorageService chatStorageService, ConfigurationService configurationService, SmoothScrollingService smoothScrollingService)
     {
         // 初始化各个服务和数据模型
         AppWindow = appWindow;
-        ViewViewModel = viewViewModel;
+        ViewModel = viewModel;
         AppGlobalData = appGlobalData;
         PageService = pageService;
         NoteService = noteService;
@@ -35,8 +27,8 @@ public partial class MainPage : Page
         ChatStorageService = chatStorageService;
         ConfigurationService = configurationService;
         DataContext = this;
-
         // 从存储中加载所有会话并添加到全局数据中
+        // 视图中左侧列表渲染的就是ChatSessionModel
         foreach (var session in ChatStorageService.GetAllSessions())
             AppGlobalData.Sessions.Add(new ChatSessionModel(session));
         // 如果没有会话，则创建一个新的默认会话
@@ -49,11 +41,10 @@ public partial class MainPage : Page
         // 为会话滚动查看器注册平滑滚动功能
         smoothScrollingService.Register(sessionsScrollViewer);
     }
-
     // 应用程序窗口实例属性
     public AppWindow AppWindow { get; }
     // 主页面视图模型属性
-    public MainPageViewModel ViewViewModel { get; }
+    public MainPageViewModel ViewModel { get; }
     // 应用全局数据属性
     public AppGlobalData AppGlobalData { get; }
     // 页面服务属性
@@ -92,7 +83,7 @@ public partial class MainPage : Page
             // 清除该会话的所有消息记录
             ChatStorageService.ClearMessageBySession(sessionId);
             // 清空当前聊天视图模型中的消息列表
-            ViewViewModel.CurrentChat?.ViewViewModel.Messages.Clear();
+            ViewModel.CurrentChat?.ViewModel.Messages.Clear();
 
             // 显示重置成功的提示信息，持续1.5秒
             await NoteService.ShowAndWaitAsync("Chat has been reset.", 1500);
@@ -112,7 +103,7 @@ public partial class MainPage : Page
         var session = ChatSession.Create();
         // 创建对应的会话模型对象
         var sessionModel = new ChatSessionModel(session);
-        // 将新会话保存到存储中
+        // 将新会话保存到数据库中
         ChatStorageService.SaveOrUpdateSession(session);
         // 将新会话模型添加到全局会话列表中
         AppGlobalData.Sessions.Add(sessionModel);
@@ -239,8 +230,8 @@ public partial class MainPage : Page
     {
         // 检查是否有选中的会话
         if (AppGlobalData.SelectedSession != null)
+            // 【核心】调用ChatPageService根据选中的会话SessionID获取页面
             // 将页面中当前显示的聊天页面切换到对应页面
-            ViewViewModel.CurrentChat =
-                ChatPageService.GetPage(AppGlobalData.SelectedSession.Id);
+            ViewModel.CurrentChat = ChatPageService.GetPage(AppGlobalData.SelectedSession.Id);
     }
 }

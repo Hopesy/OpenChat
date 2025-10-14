@@ -13,19 +13,16 @@ using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Views.Pages;
 
+/*
+ * ChatPage页面初始化的过程
+ */
 public partial class ChatPage : Page
 {
-    public ChatPage(
-        ChatPageViewModel viewViewModel,
-        AppGlobalData appGlobalData,
-        NoteService noteService,
-        ChatService chatService,
-        ChatStorageService chatStorageService,
-        ConfigurationService configurationService,
-        SmoothScrollingService smoothScrollingService,
-        TitleGenerationService titleGenerationService)
+    public ChatPage(ChatPageViewModel viewModel, AppGlobalData appGlobalData, NoteService noteService,
+        ChatService chatService, ChatStorageService chatStorageService, ConfigurationService configurationService,
+        SmoothScrollingService smoothScrollingService, TitleGenerationService titleGenerationService)
     {
-        ViewViewModel = viewViewModel;
+        ViewModel = viewModel;
         AppGlobalData = appGlobalData;
         NoteService = noteService;
         ChatService = chatService;
@@ -33,13 +30,17 @@ public partial class ChatPage : Page
         ConfigurationService = configurationService;
         TitleGenerationService = titleGenerationService;
         DataContext = this;
+        // 加载并解析XAML，创建所有UI控件
         InitializeComponent();
+        // 鼠标滚轮禁用自动滚动
         messagesScrollViewer.PreviewMouseWheel += CloseAutoScrollWhileMouseWheel;
+        // 监听滚动事件，实现上拉加载
         messagesScrollViewer.ScrollChanged += MessageScrolled;
+        // 启用平滑滚动效果(默认滚动是达到一定值再滚，现在是动多少滚多少)
         smoothScrollingService.Register(messagesScrollViewer);
     }
     private ChatSessionModel? currentSessionModel;
-    public ChatPageViewModel ViewViewModel { get; }
+    public ChatPageViewModel ViewModel { get; }
     public AppGlobalData AppGlobalData { get; }
     public ChatService ChatService { get; }
     public ChatStorageService ChatStorageService { get; }
@@ -50,20 +51,23 @@ public partial class ChatPage : Page
     public ChatSessionModel? CurrentSessionModel => currentSessionModel ??=
         AppGlobalData.Sessions.FirstOrDefault(session => session.Id == SessionId);
     //【1】初始化会话:清空当前消息列表，从数据库中加载本轮会话session最近10条历史消息。
+    //【重点】必须由外部（如导航服务）调用这个方法，才能再切换会话时正确初始化页面数据。
+    //这里是该页面所有数据的起点
     public void InitSession(Guid sessionId)
     {
         SessionId = sessionId;
-        ViewViewModel.Messages.Clear();
+        ViewModel.Messages.Clear();
         //获取本轮会话最近的历史10条消息
+        //ChatMessageModel是绑定到页面的可观测模型，用它来包裹映射到数据库的实体ChatMessage
         foreach (var msg in ChatStorageService.GetLastMessages(SessionId, 10))
-            ViewViewModel.Messages.Add(new ChatMessageModel(msg));
+            ViewModel.Messages.Add(new ChatMessageModel(msg));
     }
     //【2】用户输入并点击发送消息
     [RelayCommand]
     public async Task ChatAsync()
     {
         //验证输入不为空
-        if (string.IsNullOrWhiteSpace(ViewViewModel.InputBoxText))
+        if (string.IsNullOrWhiteSpace(ViewModel.InputBoxText))
         {
             //页面上方显示消息通知
             _ = NoteService.ShowAndWaitAsync("输入信息不能为空", 1500);
@@ -76,30 +80,34 @@ public partial class ChatPage : Page
                 3000);
             return;
         }
-        // 发个消息, 将自动滚动打开, 如果已经在底部, 则将自动滚动打开
+        // 【启用自动滚动】如果当前已在底部，则打开自动滚动
+        // 原理:检测当前滚动距离VerticalOffset和允许滚动的总距离ScrollableHeight判断
         if (messagesScrollViewer.IsAtEnd())
-            autoScrollToEnd = true;
-        // 发送给AI的问题,trim去掉空格
-        var input = ViewViewModel.InputBoxText.Trim();
+            autoScrollToEnd = true; //仅仅是个标识变量
+        // 接收用户发送给AI的问题,trim去掉空格
+        var input = ViewModel.InputBoxText.Trim();
         // 清空输入框，等待用户下一次输入
-        ViewViewModel.InputBoxText = string.Empty;
+        ViewModel.InputBoxText = string.Empty;
         // 创建用户消息和AI回复的占位模型
         var requestMessageModel = new ChatMessageModel("user", input);
-        var responseMessageModel = new ChatMessageModel("assistant", string.Empty);//初始回复为空
+        var responseMessageModel = new ChatMessageModel("assistant", string.Empty); //初始回复为空
         var responseAdded = false;
         // 在向AI提问前立即显示用户输入的问题
-        ViewViewModel.Messages.Add(requestMessageModel);
+        ViewModel.Messages.Add(requestMessageModel);
         //【3】调用ChatService流式接收响应
         try
-        {
-            var dialogue =
-                await ChatService.ChatAsync(SessionId, input, content =>
-                {
+        {   
+            //
+            var dialogue = await ChatService.ChatAsync(SessionId, input, content =>
+                {   
+                    // 【流式回调】每收到一部分响应就更新 UI
                     responseMessageModel.Content = content;
                     if (!responseAdded)
                     {
                         responseAdded = true;
-                        Dispatcher.Invoke(() => { ViewViewModel.Messages.Add(responseMessageModel); });
+                        //只能在UI线程更新View
+                        //此回调方法已经不在UI线程了，所以要使用Dispatcher显式的切换到UI线程更新数据进而更新View的显示
+                        Dispatcher.Invoke(() => { ViewModel.Messages.Add(responseMessageModel); });
                     }
                 });
             //保存到数据库
@@ -131,12 +139,12 @@ public partial class ChatPage : Page
             ChatMessageModel responseMessageModel,
             string originInput)
         {
-            ViewViewModel.Messages.Remove(requestMessageModel);
-            ViewViewModel.Messages.Remove(responseMessageModel);
-            if (string.IsNullOrWhiteSpace(ViewViewModel.InputBoxText))
-                ViewViewModel.InputBoxText = input;
+            ViewModel.Messages.Remove(requestMessageModel);
+            ViewModel.Messages.Remove(responseMessageModel);
+            if (string.IsNullOrWhiteSpace(ViewModel.InputBoxText))
+                ViewModel.InputBoxText = input;
             else
-                ViewViewModel.InputBoxText = $"{input} {ViewViewModel.InputBoxText}";
+                ViewModel.InputBoxText = $"{input} {ViewModel.InputBoxText}";
         }
     }
     [RelayCommand]
@@ -172,10 +180,10 @@ public partial class ChatPage : Page
         if (e.VerticalChange != 0 &&
             messages.IsLoaded && IsLoaded &&
             messagesScrollViewer.IsAtTop(10) &&
-            ViewViewModel.Messages.FirstOrDefault()?.Storage?.Timestamp is DateTime timestamp)
+            ViewModel.Messages.FirstOrDefault()?.Storage?.Timestamp is DateTime timestamp)
         {
             foreach (var msg in ChatStorageService.GetLastMessagesBefore(SessionId, 10, timestamp))
-                ViewViewModel.Messages.Insert(0, new ChatMessageModel(msg));
+                ViewModel.Messages.Insert(0, new ChatMessageModel(msg));
             var distanceFromEnd = messagesScrollViewer.ScrollableHeight - messagesScrollViewer.VerticalOffset;
             Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action<ScrollChangedEventArgs>(e =>
             {
