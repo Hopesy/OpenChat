@@ -83,17 +83,16 @@ public class ChatService
     }
     // 取消令牌源，用于取消正在进行的聊天请求
     private CancellationTokenSource? cancellation;
-    // 创建新的聊天会话
-    public ChatSession NewSession(string name)
-    {
-        // 创建新的聊天会话对象
-        var session = ChatSession.Create(name);
-        // 将新会话保存到存储服务中
-        ChatStorageService.SaveOrUpdateSession(session);
-        // 返回创建的会话对象
-        return session;
-    }
-
+    // // 创建新的聊天会话
+    // public ChatSession NewSession(string name)
+    // {
+    //     // 创建新的聊天会话对象
+    //     var session = ChatSession.Create(name);
+    //     // 将新会话保存到存储服务中
+    //     ChatStorageService.SaveOrUpdateSession(session);
+    //     // 返回创建的会话对象
+    //     return session;
+    // }
     // 异步发送聊天消息并接收响应。sessionId会话的唯一标识符message用户发送的消息内容
     // messageHandler处理接收到的消息片段的回调函数
     public Task<ChatDialogue> ChatAsync(Guid sessionId, string message, Action<string> messageHandler)

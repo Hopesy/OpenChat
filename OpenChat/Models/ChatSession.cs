@@ -7,7 +7,7 @@ namespace OpenChat.Models
 {
     //get/init属性只能在对象初始化期间即new的时候，或者使用{}初始化器时被赋值
     //虽然使用了record，但并没有追求完全的不可变性。更看重record带来的其他好处比如值相等性比较
-    public record class ChatSession
+    public record  ChatSession
     {
         public ChatSession(Guid id, string? name)
         {

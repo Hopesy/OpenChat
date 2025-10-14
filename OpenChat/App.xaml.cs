@@ -33,7 +33,6 @@ public partial class App : Application
         {
             // 程序托管服务(包括了初始导航，显示窗口等)
             services.AddHostedService<ApplicationHostService>();
-
             // 添加基础服务
             services.AddSingleton<AppGlobalData>();
             services.AddSingleton<PageService>();
@@ -44,7 +43,6 @@ public partial class App : Application
             services.AddSingleton<ConfigurationService>();
             services.AddSingleton<SmoothScrollingService>();
             services.AddSingleton<TitleGenerationService>();
-
             // 适应
             services.AddSingleton<LanguageService>();
             services.AddSingleton<ColorModeService>();
@@ -54,15 +52,14 @@ public partial class App : Application
             services.AddSingleton<AppWindowModel>();
             services.AddSingleton<MainPageModel>();
             services.AddSingleton<ConfigPageModel>();
-
             // 作用域服务
+            // 每轮对话对应一个ChatPage实例，所以注册成了作用域服务
+            // 字典存储,key就是会话sessionID,value就是ChatPage实例
             services.AddScoped<ChatPage>();
             services.AddScoped<ChatPageModel>();
-
             // 瞬态服务
             services.AddTransient<MarkdownWpfRenderer>();
-
-            // 配置服务, 将配置与 AppConfig 绑定
+            // 配置服务, 将配置与AppConfig绑定
             services.Configure<AppConfig>(o => { context.Configuration.Bind(o); });
         })
         .Build();

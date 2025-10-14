@@ -12,7 +12,6 @@ using OpenChat.ViewModels;
 
 namespace OpenChat.Views.Pages;
 
-
 public partial class ChatPage : Page
 {
     public ChatPage(
@@ -79,14 +78,17 @@ public partial class ChatPage : Page
         // 发个消息, 将自动滚动打开, 如果已经在底部, 则将自动滚动打开
         if (messagesScrollViewer.IsAtEnd())
             autoScrollToEnd = true;
-        // 创建消息模型
+        // 发送给AI的问题,trim去掉空格
         var input = ViewModel.InputBoxText.Trim();
+        // 清空输入框，等待用户下一次输入
         ViewModel.InputBoxText = string.Empty;
+        // 创建用户消息和AI回复的占位模型
         var requestMessageModel = new ChatMessageModel("user", input);
-        var responseMessageModel = new ChatMessageModel("assistant", string.Empty);
+        var responseMessageModel = new ChatMessageModel("assistant", string.Empty);//初始回复为空
         var responseAdded = false;
+        // 在向AI提问前立即显示用户输入的问题
         ViewModel.Messages.Add(requestMessageModel);
-        //调用ChatService流式接收响应
+        //【3】调用ChatService流式接收响应
         try
         {
             var dialogue =

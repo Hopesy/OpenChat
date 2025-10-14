@@ -1,6 +1,9 @@
 # OpenGptChat
 
-一个基于OpenAI聊天完成API的简单聊天客户端。
+> 一个基于OpenAI聊天完成API的简单聊天客户端。
+
+* 用户点击新建会话创建一个ChatSession(Guid.NewGuid,name)，只有
+*
 
 ## 功能特性
 
@@ -67,7 +70,7 @@ OpenGptChat采用模块化架构，关注点清晰分离：
    ```csharp
    // 获取会话的所有消息
    ChatStorageService.GetAllMessages(sessionId);
-   
+
    // 获取最近的消息
    ChatStorageService.GetLastMessages(sessionId, count);
    ```
@@ -76,7 +79,7 @@ OpenGptChat采用模块化架构，关注点清晰分离：
    ```csharp
    // 清除会话中的所有消息
    ChatStorageService.ClearMessage(sessionId);
-   
+
    // 删除指定时间戳之前/之后的消息
    ChatStorageService.DeleteMessagesBefore(sessionId, timestamp);
    ```
