@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using OpenChat.Entitys;
 using OpenChat.Services;
 
-namespace OpenChat.ViewModels.Pages
+namespace OpenChat.Models
 {
     public partial class ChatMessageModel : ObservableObject
     {

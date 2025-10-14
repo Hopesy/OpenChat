@@ -13,9 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CommunityToolkit.Mvvm.Input;
+using OpenChat.Entitys;
 using OpenChat.Models;
 using OpenChat.Services;
-using OpenChat.ViewModels;
+using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Views.Dialogs
 {
@@ -24,9 +25,9 @@ namespace OpenChat.Views.Dialogs
     /// </summary>
     public partial class ChatSessionConfigDialog : Window
     {
-        public ChatSessionConfigDialog(ChatSessionViewModel sessionView)
+        public ChatSessionConfigDialog(ChatSessionModel session)
         {
-            SessionView = sessionView;
+            Session = session;
             DataContext = this;
 
             NoteService =
@@ -34,15 +35,15 @@ namespace OpenChat.Views.Dialogs
 
             InitializeComponent();
 
-            if (!sessionView.EnableChatContext.HasValue)
+            if (!session.EnableChatContext.HasValue)
                 enableChatContextComboBox.SelectedIndex = 0;
-            else if (sessionView.EnableChatContext.Value)
+            else if (session.EnableChatContext.Value)
                 enableChatContextComboBox.SelectedIndex = 1;
             else
                 enableChatContextComboBox.SelectedIndex = 2;
         }
 
-        public ChatSessionViewModel SessionView { get; }
+        public ChatSessionModel Session { get; }
         public NoteService NoteService { get; }
 
 
@@ -56,15 +57,15 @@ namespace OpenChat.Views.Dialogs
         [RelayCommand]
         public void AddSystemMessage()
         {
-            SessionView.SystemMessages.Add(new ValueWrapper<string>("New system message"));
+            Session.SystemMessages.Add(new ValueWrapper<string>("New system message"));
         }
 
         [RelayCommand]
         public void RemoveSystemMessage()
         {
-            if (SessionView.SystemMessages.Count > 0)
+            if (Session.SystemMessages.Count > 0)
             {
-                SessionView.SystemMessages.RemoveAt(SessionView.SystemMessages.Count - 1);
+                Session.SystemMessages.RemoveAt(Session.SystemMessages.Count - 1);
             }
         }
 
@@ -82,9 +83,9 @@ namespace OpenChat.Views.Dialogs
                 return;
 
             if (item.Tag is bool value)
-                SessionView.EnableChatContext = value;
+                Session.EnableChatContext = value;
             else
-                SessionView.EnableChatContext = null;
+                Session.EnableChatContext = null;
         }
     }
 }

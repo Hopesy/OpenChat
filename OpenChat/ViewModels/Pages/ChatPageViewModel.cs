@@ -2,9 +2,10 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using OpenChat.Models;
 using OpenChat.Services;
 
-namespace OpenChat.ViewModels;
+namespace OpenChat.ViewModels.Pages;
 
 public partial class ChatPageViewModel : ObservableObject
 {

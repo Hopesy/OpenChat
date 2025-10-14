@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using OpenChat.Views.Pages;
 using OpenChat.Views;
 
-namespace OpenChat.ViewModels
+namespace OpenChat.ViewModels.Pages
 {
     public partial class MainPageViewModel : ObservableObject
     {

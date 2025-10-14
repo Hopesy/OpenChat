@@ -8,11 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenChat.Views.Pages;
-using OpenChat.Markdown;
-using OpenChat.Models;
+using OpenChat.Controls.Markdown;
+using OpenChat.Entitys;
 using OpenChat.Services;
 using OpenChat.Utilities;
-using OpenChat.ViewModels;
+using OpenChat.ViewModels.Pages;
+using OpenChat.Views;
 
 namespace OpenChat;
 

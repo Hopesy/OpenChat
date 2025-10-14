@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OpenChat.Markdown;
+using OpenChat.Controls.Markdown;
 using OpenChat.Utilities;
 using OpenChat.Views.Pages;
 using OpenChat.Views;

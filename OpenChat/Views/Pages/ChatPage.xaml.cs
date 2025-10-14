@@ -6,9 +6,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Input;
+using OpenChat.Models;
 using OpenChat.Services;
 using OpenChat.Utilities;
-using OpenChat.ViewModels;
+using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Views.Pages;
 
@@ -37,7 +38,7 @@ public partial class ChatPage : Page
         messagesScrollViewer.ScrollChanged += MessageScrolled;
         smoothScrollingService.Register(messagesScrollViewer);
     }
-    private ChatSessionViewModel? currentSessionModel;
+    private ChatSessionModel? currentSessionModel;
     public ChatPageViewModel ViewViewModel { get; }
     public AppGlobalData AppGlobalData { get; }
     public ChatService ChatService { get; }
@@ -46,7 +47,7 @@ public partial class ChatPage : Page
     public ConfigurationService ConfigurationService { get; }
     public TitleGenerationService TitleGenerationService { get; }
     public Guid SessionId { get; private set; }
-    public ChatSessionViewModel? CurrentSessionModel => currentSessionModel ??=
+    public ChatSessionModel? CurrentSessionModel => currentSessionModel ??=
         AppGlobalData.Sessions.FirstOrDefault(session => session.Id == SessionId);
     //【1】初始化会话:清空当前消息列表，从数据库中加载本轮会话session最近10条历史消息。
     public void InitSession(Guid sessionId)
@@ -105,7 +106,7 @@ public partial class ChatPage : Page
             requestMessageModel.Storage = dialogue.Ask;
             responseMessageModel.Storage = dialogue.Answer;
             //自动生成会话标题
-            if (CurrentSessionModel is ChatSessionViewModel currentSessionModel &&
+            if (CurrentSessionModel is ChatSessionModel currentSessionModel &&
                 string.IsNullOrEmpty(currentSessionModel.Name))
             {
                 var title = await TitleGenerationService.GenerateAsync(new[]

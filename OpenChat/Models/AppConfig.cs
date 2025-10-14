@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using OpenChat.Common.Models;
+using OpenChat.Utilities;
 
-namespace OpenChat.Models
+namespace OpenChat.Entitys
 {
     public partial class AppConfig : ObservableObject
     {

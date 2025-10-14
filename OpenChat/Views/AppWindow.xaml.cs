@@ -4,9 +4,9 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.Input;
 using OpenChat.Services;
-using OpenChat.ViewModels;
+using OpenChat.ViewModels.Pages;
 
-namespace OpenChat
+namespace OpenChat.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

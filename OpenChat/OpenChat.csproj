@@ -40,7 +40,53 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ViewModels\Pages\" />
+      <Page Update="Themes\Languages\ar.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\en.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\es.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\fr.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\ja.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\ru.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\tr.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\ur.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\zh-hans.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\zh-hant.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\Languages\_base.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\ColorModes\DarkMode.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\ColorModes\LightMode.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Themes\ColorModes\_ColorModeBase.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="Views\AppWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 </Project>

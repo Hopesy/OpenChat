@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenChat.Markdown
+namespace OpenChat.Controls.Markdown
 {
     public class MarkdownLinkNavigateEventArgs : EventArgs
     {

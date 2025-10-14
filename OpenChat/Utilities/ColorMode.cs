@@ -1,4 +1,4 @@
-﻿ namespace OpenChat.Common.Models
+﻿ namespace OpenChat.Utilities
 {
     public enum ColorMode
     {

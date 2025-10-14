@@ -10,9 +10,10 @@ using OpenChat.Services;
 using OpenChat.Views.Dialogs;
 using OpenChat.Views.Pages;
 using OpenChat.Utilities;
+using OpenChat.ViewModels.Pages;
 using OpenChat.Views;
 
-namespace OpenChat.ViewModels.Pages;
+namespace OpenChat.Models;
 
 public partial class ChatSessionModel : ObservableObject
 {

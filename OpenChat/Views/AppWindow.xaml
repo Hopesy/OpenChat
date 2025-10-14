@@ -1,4 +1,4 @@
-﻿<Window x:Class="OpenChat.AppWindow"
+﻿<Window x:Class="OpenChat.Views.AppWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
@@ -13,11 +13,10 @@
         Title="{Binding ViewViewModel.ApplicationTitle}"
         Width="880"
         Height="600"
-        d:DataContext="{d:DesignInstance Type=local:AppWindow}"
         Background="{DynamicResource GeneralBackground}"
         FontSize="{DynamicResource NormalFontSize}"
         Foreground="{DynamicResource FontForeground}"
-        Icon="assets/images/openai.png"
+        Icon="/assets/images/openai.png"
         Topmost="{Binding ViewViewModel.Configuration.WindowAlwaysOnTop}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
@@ -45,8 +44,8 @@
                               VerticalAlignment="Top"
                               Background="{DynamicResource BoxBackground}"
                               BorderThickness="1,0,1,1"
-                              Show="{Binding NoteService.MessageView.Show}"
-                              Text="{Binding NoteService.MessageView.Text}"
+                              Show="{Binding NoteService.Message.Show}"
+                              Text="{Binding NoteService.Message.Text}"
                               Visibility="Hidden">
             <!-- Behavior代码是为NoteControl添加点击关闭功能的，当然也可以写在后端代码中 -->
             <!-- 当用户点击NoteControl时，自动调用NoteService的Close方法来关闭通知 -->
@@ -72,7 +71,7 @@
         <tb:TaskbarIcon Name="appIcon"
                         DataContext="{Binding}"
                         DoubleClickCommand="{x:Static local:App.ShowAppCommand}"
-                        IconSource="assets/images/openai.ico"
+                        IconSource="/assets/images/openai.ico"
                         LeftClickCommand="{x:Static local:App.ShowAppCommand}"
                         ToolTipText="{x:Null}">
             <!-- 系统托盘右键菜单 -->

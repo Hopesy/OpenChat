@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using OpenChat.Models;
+using OpenChat.Entitys;
 using OpenChat.Services;
 
-namespace OpenChat.ViewModels
+namespace OpenChat.ViewModels.Pages
 {
     public class AppWindowViewModel : ObservableObject
     {

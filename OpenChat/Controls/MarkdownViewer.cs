@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Markdig;
 using Markdig.Syntax;
-using OpenChat.Markdown;
+using OpenChat.Controls.Markdown;
 
 namespace OpenChat.Controls
 {

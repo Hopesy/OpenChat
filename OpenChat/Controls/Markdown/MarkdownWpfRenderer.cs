@@ -15,11 +15,11 @@ using Markdig.Extensions.Tables;
 using Markdig.Extensions.TaskLists;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
-using OpenChat.Common.Models;
+using OpenChat.Utilities;
 using OpenChat.Services;
 using WpfDocs = System.Windows.Documents;
 
-namespace OpenChat.Markdown
+namespace OpenChat.Controls.Markdown
 {
     public class MarkdownWpfRenderer
     {

@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using Microsoft.Win32;
-using OpenChat.Common.Models;
 using OpenChat.Utilities;
 
 namespace OpenChat.Services
@@ -15,10 +14,10 @@ namespace OpenChat.Services
         private static string resourceUriPrefix = "pack://application:,,,";
 
         private ResourceDictionary lightMode =
-            new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/ColorModes/LightMode.xaml") };
+            new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/ColorModes/LightMode.xaml") };
 
         private ResourceDictionary darkMode =
-            new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/ColorModes/DarkMode.xaml") };
+            new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/ColorModes/DarkMode.xaml") };
 
         public ColorModeService(
             ConfigurationService configurationService)

@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
-namespace OpenChat.Markdown
+namespace OpenChat.Controls.Markdown
 {
 	public enum MarkdownResKey
 	{

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using OpenChat.Models;
+using OpenChat.Entitys;
 
 namespace OpenChat.Services;
 

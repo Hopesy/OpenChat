@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace OpenChat.ViewModels.Pages
+namespace OpenChat.Models
 {
     public partial class NoteMessageModel : ObservableObject
     {

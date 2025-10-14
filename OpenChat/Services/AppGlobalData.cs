@@ -5,17 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using OpenChat.ViewModels;
+using OpenChat.Models;
+using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Services
 {
     public partial class AppGlobalData : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<ChatSessionViewModel> _sessions =
-            new ObservableCollection<ChatSessionViewModel>();
+        private ObservableCollection<ChatSessionModel> _sessions =
+            new ObservableCollection<ChatSessionModel>();
 
         [ObservableProperty]
-        private ChatSessionViewModel? _selectedSession;
+        private ChatSessionModel? _selectedSession;
     }
 }

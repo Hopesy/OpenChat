@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
+using OpenChat.Entitys;
 using OpenChat.Models;
 using OpenChat.Services;
-using OpenChat.ViewModels;
+using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Views.Pages;
 
@@ -37,7 +38,7 @@ public partial class MainPage : Page
 
         // 从存储中加载所有会话并添加到全局数据中
         foreach (var session in ChatStorageService.GetAllSessions())
-            AppGlobalData.Sessions.Add(new ChatSessionViewModel(session));
+            AppGlobalData.Sessions.Add(new ChatSessionModel(session));
         // 如果没有会话，则创建一个新的默认会话
         if (AppGlobalData.Sessions.Count == 0)
             NewSession();
@@ -99,7 +100,7 @@ public partial class MainPage : Page
         else
         {
             // 如果没有选中的会话，显示提示信息，持续1.5秒
-            await NoteService.ShowAndWaitAsync("You need to select a sessionView.", 1500);
+            await NoteService.ShowAndWaitAsync("You need to select a session.", 1500);
         }
     }
     //【2】新建会话：
@@ -110,7 +111,7 @@ public partial class MainPage : Page
         // 创建新的聊天会话对象
         var session = ChatSession.Create();
         // 创建对应的会话模型对象
-        var sessionModel = new ChatSessionViewModel(session);
+        var sessionModel = new ChatSessionModel(session);
         // 将新会话保存到存储中
         ChatStorageService.SaveOrUpdateSession(session);
         // 将新会话模型添加到全局会话列表中
@@ -121,27 +122,27 @@ public partial class MainPage : Page
     // 删除会话
     [RelayCommand]
     // 执行删除指定会话的命令
-    public void DeleteSession(ChatSessionViewModel sessionView)
+    public void DeleteSession(ChatSessionModel session)
     {
         // 检查是否只剩最后一个会话，如果是则不允许删除
         if (AppGlobalData.Sessions.Count == 1)
         {
             // 显示无法删除最后一个会话的提示信息，持续1.5秒
-            NoteService.Show("You can't delete the last sessionView.", 1500);
+            NoteService.Show("You can't delete the last session.", 1500);
             return;
         }
         // 获取要删除会话在列表中的索引位置
         var index =
-            AppGlobalData.Sessions.IndexOf(sessionView);
+            AppGlobalData.Sessions.IndexOf(session);
         // 计算删除后应该选中的新会话索引（选择前一个会话，如果删除的是第一个则选择第一个）
         var newIndex =
             Math.Max(0, index - 1);
         // 从聊天页面服务中移除该会话对应的页面
-        ChatPageService.RemovePage(sessionView.Id);
+        ChatPageService.RemovePage(session.Id);
         // 从存储中删除该会话
-        ChatStorageService.DeleteSession(sessionView.Id);
+        ChatStorageService.DeleteSession(session.Id);
         // 从全局会话列表中移除该会话
-        AppGlobalData.Sessions.Remove(sessionView);
+        AppGlobalData.Sessions.Remove(session);
 
         // 设置新的选中会话
         AppGlobalData.SelectedSession = AppGlobalData.Sessions[newIndex];

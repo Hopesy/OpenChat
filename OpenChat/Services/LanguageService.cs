@@ -15,16 +15,16 @@ namespace OpenChat.Services
         private static Dictionary<CultureInfo, ResourceDictionary> languageResources =
             new Dictionary<CultureInfo, ResourceDictionary>()
             {
-                { new CultureInfo("en"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/en.xaml" ) } },
-                { new CultureInfo("zh-hans"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/zh-hans.xaml" ) } },
-                { new CultureInfo("zh-hant"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/zh-hant.xaml" ) } },
-                { new CultureInfo("ja"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/ja.xaml" ) } },
-                { new CultureInfo("ar"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/ar.xaml" ) } },
-                { new CultureInfo("es"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/es.xaml" ) } },
-                { new CultureInfo("fr"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/fr.xaml" ) } },
-                { new CultureInfo("ru"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/ru.xaml" ) } },
-                { new CultureInfo("ur"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/ur.xaml" ) } },
-                { new CultureInfo("tr"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Languages/tr.xaml" ) } },
+                { new CultureInfo("en"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/en.xaml" ) } },
+                { new CultureInfo("zh-hans"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/zh-hans.xaml" ) } },
+                { new CultureInfo("zh-hant"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/zh-hant.xaml" ) } },
+                { new CultureInfo("ja"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/ja.xaml" ) } },
+                { new CultureInfo("ar"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/ar.xaml" ) } },
+                { new CultureInfo("es"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/es.xaml" ) } },
+                { new CultureInfo("fr"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/fr.xaml" ) } },
+                { new CultureInfo("ru"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/ru.xaml" ) } },
+                { new CultureInfo("ur"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/ur.xaml" ) } },
+                { new CultureInfo("tr"), new ResourceDictionary() { Source = new Uri($"{resourceUriPrefix}/Themes/Languages/tr.xaml" ) } },
             };
 
         private static CultureInfo defaultLanguage =

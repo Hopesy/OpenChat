@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace OpenChat.Models
+namespace OpenChat.Entitys
 {
     public partial class ValueWrapper<T> : ObservableObject
     {

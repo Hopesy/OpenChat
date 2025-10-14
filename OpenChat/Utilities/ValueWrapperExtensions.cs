@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OpenChat.Models;
+using OpenChat.Entitys;
 
 namespace OpenChat.Utilities
 {

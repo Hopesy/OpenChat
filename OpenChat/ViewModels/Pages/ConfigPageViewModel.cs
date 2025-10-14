@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using OpenChat.Entitys;
 
-namespace OpenChat.ViewModels
+namespace OpenChat.ViewModels.Pages
 {
     public partial class ConfigPageViewModel : ObservableObject
     {

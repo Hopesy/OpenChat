@@ -8,7 +8,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:s="clr-namespace:System;assembly=mscorlib"
       xmlns:utilities="clr-namespace:OpenChat.Utilities"
-      xmlns:vm="clr-namespace:OpenChat.ViewModels"
+      xmlns:vm="clr-namespace:OpenChat.ViewModels.Pages"
       Title="MainPage"
       d:Background="White"
       d:DataContext="{d:DesignInstance Type=local:MainPage}"

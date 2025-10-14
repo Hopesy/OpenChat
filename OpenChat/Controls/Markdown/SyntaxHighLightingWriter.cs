@@ -16,7 +16,7 @@ using ColorCode.Styling;
 using Wpf = System.Windows;
 using WpfDocs = System.Windows.Documents;
 
-namespace OpenChat.Markdown
+namespace OpenChat.Controls.Markdown
 {
     public class WpfSyntaxHighLighting : CodeColorizerBase
     {

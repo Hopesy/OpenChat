@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 using WpfDocs = System.Windows.Documents;
 
-namespace OpenChat.Markdown
+namespace OpenChat.Controls.Markdown
 {
     public static class MarkdownWpfRendererExtensions
     {

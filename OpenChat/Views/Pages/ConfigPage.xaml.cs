@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
-using OpenChat.Models;
+using OpenChat.Entitys;
 using OpenChat.Services;
-using OpenChat.ViewModels;
+using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Views.Pages
 {

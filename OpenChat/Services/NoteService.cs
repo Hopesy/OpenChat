@@ -1,12 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using OpenChat.ViewModels;
+using OpenChat.Models;
+using OpenChat.ViewModels.Pages;
 
 namespace OpenChat.Services
 {
     public class NoteService
     {
-        public NoteMessageViewModel MessageView { get; } = new NoteMessageViewModel();
+        public NoteMessageModel Message { get; } = new NoteMessageModel();
 
         private CancellationTokenSource? cancellation;
 
@@ -15,8 +16,8 @@ namespace OpenChat.Services
             if (token.IsCancellationRequested)
                 return;
 
-            MessageView.Text = msg;
-            MessageView.Show = true;
+            Message.Text = msg;
+            Message.Show = true;
 
             try
             {
@@ -25,7 +26,7 @@ namespace OpenChat.Services
                 if (token.IsCancellationRequested)
                     return;
 
-                MessageView.Show = false;
+                Message.Show = false;
             }
             catch (TaskCanceledException) { }
         }
@@ -48,15 +49,15 @@ namespace OpenChat.Services
 
         public void Show(string msg)
         {
-            MessageView.Text = msg;
-            MessageView.Show = true;
+            Message.Text = msg;
+            Message.Show = true;
         }
 
         public void Close()
         {
             cancellation?.Cancel();
 
-            MessageView.Show = false;
+            Message.Show = false;
         }
     }
 }
