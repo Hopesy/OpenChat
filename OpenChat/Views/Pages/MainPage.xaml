@@ -192,8 +192,8 @@
                                         <TextBlock.Resources>
                                             <s:String x:Key="SessionMessageNameFormat">{0}:</s:String>
                                         </TextBlock.Resources>
-                                        <Run Text="{Binding PageModel.LastMessage.DisplayName, Mode=OneWay, StringFormat={StaticResource SessionMessageNameFormat}}" />
-                                        <Run Text="{Binding PageModel.LastMessage.SingleLineContent, Mode=OneWay, FallbackValue='空值'}" />
+                                        <Run Text="{Binding PageViewModel.LastMessage.DisplayName, Mode=OneWay, StringFormat={StaticResource SessionMessageNameFormat}}" />
+                                        <Run Text="{Binding PageViewModel.LastMessage.SingleLineContent, Mode=OneWay, FallbackValue='空值'}" />
                                     </TextBlock>
                                 </StackPanel>
                             </DataTemplate>
@@ -233,7 +233,7 @@
             </GridSplitter>
             <!-- 右侧Frame承载聊天页面 -->
             <Frame Grid.Column="2" Grid.ColumnSpan="2"
-                   Content="{Binding ViewModel.CurrentChat}"
+                   Content="{Binding ViewViewModel.CurrentChat}"
                    NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>

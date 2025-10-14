@@ -39,10 +39,10 @@ public record ChatMessage
 
 ---
 
-### ChatMessageModel（ViewModel 层）
+### ChatMessageViewModel（ViewModel 层）
 
 ```csharp
-public partial class ChatMessageModel : ObservableObject
+public partial class ChatMessageViewModel : ObservableObject
 {
     // 【1】关联的数据模型
     public ChatMessage? Storage { get; set; }

@@ -14,13 +14,13 @@ namespace OpenChat
     public partial class AppWindow : Window
     {
         public AppWindow(
-            AppWindowModel viewModel,
+            AppWindowViewModel viewViewModel,
             PageService pageService,
             NoteService noteService,
             LanguageService languageService,
             ColorModeService colorModeService)
         {
-            ViewModel = viewModel;
+            ViewViewModel = viewViewModel;
             PageService = pageService;
             NoteService = noteService;
             LanguageService = languageService;
@@ -31,7 +31,7 @@ namespace OpenChat
             InitializeComponent();
         }
 
-        public AppWindowModel ViewModel { get; }
+        public AppWindowViewModel ViewViewModel { get; }
         public PageService PageService { get; }
         public NoteService NoteService { get; }
         public LanguageService LanguageService { get; }

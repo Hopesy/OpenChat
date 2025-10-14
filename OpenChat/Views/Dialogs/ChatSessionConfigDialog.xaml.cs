@@ -24,9 +24,9 @@ namespace OpenChat.Views.Dialogs
     /// </summary>
     public partial class ChatSessionConfigDialog : Window
     {
-        public ChatSessionConfigDialog(ChatSessionModel session)
+        public ChatSessionConfigDialog(ChatSessionViewModel sessionView)
         {
-            Session = session;
+            SessionView = sessionView;
             DataContext = this;
 
             NoteService =
@@ -34,15 +34,15 @@ namespace OpenChat.Views.Dialogs
 
             InitializeComponent();
 
-            if (!session.EnableChatContext.HasValue)
+            if (!sessionView.EnableChatContext.HasValue)
                 enableChatContextComboBox.SelectedIndex = 0;
-            else if (session.EnableChatContext.Value)
+            else if (sessionView.EnableChatContext.Value)
                 enableChatContextComboBox.SelectedIndex = 1;
             else
                 enableChatContextComboBox.SelectedIndex = 2;
         }
 
-        public ChatSessionModel Session { get; }
+        public ChatSessionViewModel SessionView { get; }
         public NoteService NoteService { get; }
 
 
@@ -56,15 +56,15 @@ namespace OpenChat.Views.Dialogs
         [RelayCommand]
         public void AddSystemMessage()
         {
-            Session.SystemMessages.Add(new ValueWrapper<string>("New system message"));
+            SessionView.SystemMessages.Add(new ValueWrapper<string>("New system message"));
         }
 
         [RelayCommand]
         public void RemoveSystemMessage()
         {
-            if (Session.SystemMessages.Count > 0)
+            if (SessionView.SystemMessages.Count > 0)
             {
-                Session.SystemMessages.RemoveAt(Session.SystemMessages.Count - 1);
+                SessionView.SystemMessages.RemoveAt(SessionView.SystemMessages.Count - 1);
             }
         }
 
@@ -82,9 +82,9 @@ namespace OpenChat.Views.Dialogs
                 return;
 
             if (item.Tag is bool value)
-                Session.EnableChatContext = value;
+                SessionView.EnableChatContext = value;
             else
-                Session.EnableChatContext = null;
+                SessionView.EnableChatContext = null;
         }
     }
 }

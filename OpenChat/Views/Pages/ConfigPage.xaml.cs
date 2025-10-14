@@ -17,7 +17,7 @@ namespace OpenChat.Views.Pages
     {
         public ConfigPage(
             AppWindow appWindow,
-            ConfigPageModel viewModel,
+            ConfigPageViewModel viewViewModel,
             PageService pageService,
             NoteService noteService,
             LanguageService languageService,
@@ -26,7 +26,7 @@ namespace OpenChat.Views.Pages
             SmoothScrollingService smoothScrollingService)
         {
             AppWindow = appWindow;
-            ViewModel = viewModel;
+            ViewViewModel = viewViewModel;
             PageService = pageService;
             NoteService = noteService;
             LanguageService = languageService;
@@ -42,7 +42,7 @@ namespace OpenChat.Views.Pages
         }
 
         public AppWindow AppWindow { get; }
-        public ConfigPageModel ViewModel { get; }
+        public ConfigPageViewModel ViewViewModel { get; }
         public PageService PageService { get; }
         public NoteService NoteService { get; }
         public LanguageService LanguageService { get; }
@@ -51,14 +51,14 @@ namespace OpenChat.Views.Pages
 
         private void LoadSystemMessagesCore()
         {
-            ViewModel.SystemMessages.Clear();
+            ViewViewModel.SystemMessages.Clear();
             foreach (var msg in ConfigurationService.Configuration.SystemMessages)
-                ViewModel.SystemMessages.Add(new ValueWrapper<string>(msg));
+                ViewViewModel.SystemMessages.Add(new ValueWrapper<string>(msg));
         }
 
         private void ApplySystemMessagesCore()
         {
-            ConfigurationService.Configuration.SystemMessages = ViewModel.SystemMessages
+            ConfigurationService.Configuration.SystemMessages = ViewViewModel.SystemMessages
                 .Select(wraper => wraper.Value)
                 .ToArray();
         }
@@ -101,15 +101,15 @@ namespace OpenChat.Views.Pages
         [RelayCommand]
         public void AddSystemMessage()
         {
-            ViewModel.SystemMessages.Add(new ValueWrapper<string>("New system message"));
+            ViewViewModel.SystemMessages.Add(new ValueWrapper<string>("New system message"));
         }
 
         [RelayCommand]
         public void RemoveSystemMessage()
         {
-            if (ViewModel.SystemMessages.Count > 0)
+            if (ViewViewModel.SystemMessages.Count > 0)
             {
-                ViewModel.SystemMessages.RemoveAt(ViewModel.SystemMessages.Count - 1);
+                ViewViewModel.SystemMessages.RemoveAt(ViewViewModel.SystemMessages.Count - 1);
             }
         }
 

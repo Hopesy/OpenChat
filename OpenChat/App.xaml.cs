@@ -49,14 +49,14 @@ public partial class App : Application
             services.AddSingleton<AppWindow>();
             services.AddSingleton<MainPage>();
             services.AddSingleton<ConfigPage>();
-            services.AddSingleton<AppWindowModel>();
-            services.AddSingleton<MainPageModel>();
-            services.AddSingleton<ConfigPageModel>();
+            services.AddSingleton<AppWindowViewModel>();
+            services.AddSingleton<MainPageViewModel>();
+            services.AddSingleton<ConfigPageViewModel>();
             // 作用域服务
             // 每轮对话对应一个ChatPage实例，所以注册成了作用域服务
             // 字典存储,key就是会话sessionID,value就是ChatPage实例
             services.AddScoped<ChatPage>();
-            services.AddScoped<ChatPageModel>();
+            services.AddScoped<ChatPageViewModel>();
             // 瞬态服务
             services.AddTransient<MarkdownWpfRenderer>();
             // 配置服务, 将配置与AppConfig绑定

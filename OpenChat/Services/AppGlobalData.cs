@@ -12,10 +12,10 @@ namespace OpenChat.Services
     public partial class AppGlobalData : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<ChatSessionModel> _sessions =
-            new ObservableCollection<ChatSessionModel>();
+        private ObservableCollection<ChatSessionViewModel> _sessions =
+            new ObservableCollection<ChatSessionViewModel>();
 
         [ObservableProperty]
-        private ChatSessionModel? _selectedSession;
+        private ChatSessionViewModel? _selectedSession;
     }
 }

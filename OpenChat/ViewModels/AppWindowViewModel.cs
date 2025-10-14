@@ -4,9 +4,9 @@ using OpenChat.Services;
 
 namespace OpenChat.ViewModels
 {
-    public class AppWindowModel : ObservableObject
+    public class AppWindowViewModel : ObservableObject
     {
-        public AppWindowModel(ConfigurationService configurationService)
+        public AppWindowViewModel(ConfigurationService configurationService)
         {
             ConfigurationService = configurationService;
         }

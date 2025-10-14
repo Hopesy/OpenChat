@@ -19,7 +19,7 @@ namespace OpenChat.Utilities
         }
 
         public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
+            DependencyProperty.Register("MessageView", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
 
     }
 }

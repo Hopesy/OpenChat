@@ -5,7 +5,7 @@ using OpenChat.Views;
 
 namespace OpenChat.ViewModels
 {
-    public partial class MainPageModel : ObservableObject
+    public partial class MainPageViewModel : ObservableObject
     {
         [ObservableProperty]
         private ChatPage? _currentChat;

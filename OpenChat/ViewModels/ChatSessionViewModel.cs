@@ -14,9 +14,9 @@ using OpenChat.Views;
 
 namespace OpenChat.ViewModels;
 
-public partial class ChatSessionModel : ObservableObject
+public partial class ChatSessionViewModel : ObservableObject
 {
-    public ChatSessionModel(ChatSession storage)
+    public ChatSessionViewModel(ChatSession storage)
     {
         Storage = storage;
         SetupStorage(storage);

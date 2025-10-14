@@ -115,7 +115,7 @@
                     <Border MinHeight="10" Padding="5"
                             BorderBrush="{DynamicResource BoxBorder}"
                             BorderThickness="1">
-                        <ItemsControl ItemsSource="{Binding ViewModel.SystemMessages}">
+                        <ItemsControl ItemsSource="{Binding ViewViewModel.SystemMessages}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <TextBox Margin="0,1" Padding="5,3" AcceptsReturn="True"

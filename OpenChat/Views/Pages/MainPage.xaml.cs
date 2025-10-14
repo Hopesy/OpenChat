@@ -13,7 +13,7 @@ public partial class MainPage : Page
 {
     public MainPage(
         AppWindow appWindow,
-        MainPageModel viewModel,
+        MainPageViewModel viewViewModel,
         AppGlobalData appGlobalData,
         PageService pageService,
         NoteService noteService,
@@ -25,7 +25,7 @@ public partial class MainPage : Page
     {
         // 初始化各个服务和数据模型
         AppWindow = appWindow;
-        ViewModel = viewModel;
+        ViewViewModel = viewViewModel;
         AppGlobalData = appGlobalData;
         PageService = pageService;
         NoteService = noteService;
@@ -37,7 +37,7 @@ public partial class MainPage : Page
 
         // 从存储中加载所有会话并添加到全局数据中
         foreach (var session in ChatStorageService.GetAllSessions())
-            AppGlobalData.Sessions.Add(new ChatSessionModel(session));
+            AppGlobalData.Sessions.Add(new ChatSessionViewModel(session));
         // 如果没有会话，则创建一个新的默认会话
         if (AppGlobalData.Sessions.Count == 0)
             NewSession();
@@ -52,7 +52,7 @@ public partial class MainPage : Page
     // 应用程序窗口实例属性
     public AppWindow AppWindow { get; }
     // 主页面视图模型属性
-    public MainPageModel ViewModel { get; }
+    public MainPageViewModel ViewViewModel { get; }
     // 应用全局数据属性
     public AppGlobalData AppGlobalData { get; }
     // 页面服务属性
@@ -91,7 +91,7 @@ public partial class MainPage : Page
             // 清除该会话的所有消息记录
             ChatStorageService.ClearMessageBySession(sessionId);
             // 清空当前聊天视图模型中的消息列表
-            ViewModel.CurrentChat?.ViewModel.Messages.Clear();
+            ViewViewModel.CurrentChat?.ViewViewModel.Messages.Clear();
 
             // 显示重置成功的提示信息，持续1.5秒
             await NoteService.ShowAndWaitAsync("Chat has been reset.", 1500);
@@ -99,7 +99,7 @@ public partial class MainPage : Page
         else
         {
             // 如果没有选中的会话，显示提示信息，持续1.5秒
-            await NoteService.ShowAndWaitAsync("You need to select a session.", 1500);
+            await NoteService.ShowAndWaitAsync("You need to select a sessionView.", 1500);
         }
     }
     //【2】新建会话：
@@ -110,7 +110,7 @@ public partial class MainPage : Page
         // 创建新的聊天会话对象
         var session = ChatSession.Create();
         // 创建对应的会话模型对象
-        var sessionModel = new ChatSessionModel(session);
+        var sessionModel = new ChatSessionViewModel(session);
         // 将新会话保存到存储中
         ChatStorageService.SaveOrUpdateSession(session);
         // 将新会话模型添加到全局会话列表中
@@ -121,27 +121,27 @@ public partial class MainPage : Page
     // 删除会话
     [RelayCommand]
     // 执行删除指定会话的命令
-    public void DeleteSession(ChatSessionModel session)
+    public void DeleteSession(ChatSessionViewModel sessionView)
     {
         // 检查是否只剩最后一个会话，如果是则不允许删除
         if (AppGlobalData.Sessions.Count == 1)
         {
             // 显示无法删除最后一个会话的提示信息，持续1.5秒
-            NoteService.Show("You can't delete the last session.", 1500);
+            NoteService.Show("You can't delete the last sessionView.", 1500);
             return;
         }
         // 获取要删除会话在列表中的索引位置
         var index =
-            AppGlobalData.Sessions.IndexOf(session);
+            AppGlobalData.Sessions.IndexOf(sessionView);
         // 计算删除后应该选中的新会话索引（选择前一个会话，如果删除的是第一个则选择第一个）
         var newIndex =
             Math.Max(0, index - 1);
         // 从聊天页面服务中移除该会话对应的页面
-        ChatPageService.RemovePage(session.Id);
+        ChatPageService.RemovePage(sessionView.Id);
         // 从存储中删除该会话
-        ChatStorageService.DeleteSession(session.Id);
+        ChatStorageService.DeleteSession(sessionView.Id);
         // 从全局会话列表中移除该会话
-        AppGlobalData.Sessions.Remove(session);
+        AppGlobalData.Sessions.Remove(sessionView);
 
         // 设置新的选中会话
         AppGlobalData.SelectedSession = AppGlobalData.Sessions[newIndex];
@@ -239,7 +239,7 @@ public partial class MainPage : Page
         // 检查是否有选中的会话
         if (AppGlobalData.SelectedSession != null)
             // 将页面中当前显示的聊天页面切换到对应页面
-            ViewModel.CurrentChat =
+            ViewViewModel.CurrentChat =
                 ChatPageService.GetPage(AppGlobalData.SelectedSession.Id);
     }
 }

@@ -10,7 +10,7 @@
         xmlns:mybehaviors="clr-namespace:OpenChat.Behaviors"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:utils="clr-namespace:OpenChat.Utilities"
-        Title="{Binding ViewModel.ApplicationTitle}"
+        Title="{Binding ViewViewModel.ApplicationTitle}"
         Width="880"
         Height="600"
         d:DataContext="{d:DesignInstance Type=local:AppWindow}"
@@ -18,7 +18,7 @@
         FontSize="{DynamicResource NormalFontSize}"
         Foreground="{DynamicResource FontForeground}"
         Icon="assets/images/openai.png"
-        Topmost="{Binding ViewModel.Configuration.WindowAlwaysOnTop}"
+        Topmost="{Binding ViewViewModel.Configuration.WindowAlwaysOnTop}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
     <Window.Resources>
@@ -45,8 +45,8 @@
                               VerticalAlignment="Top"
                               Background="{DynamicResource BoxBackground}"
                               BorderThickness="1,0,1,1"
-                              Show="{Binding NoteService.Data.Show}"
-                              Text="{Binding NoteService.Data.Text}"
+                              Show="{Binding NoteService.MessageView.Show}"
+                              Text="{Binding NoteService.MessageView.Text}"
                               Visibility="Hidden">
             <!-- Behavior代码是为NoteControl添加点击关闭功能的，当然也可以写在后端代码中 -->
             <!-- 当用户点击NoteControl时，自动调用NoteService的Close方法来关闭通知 -->

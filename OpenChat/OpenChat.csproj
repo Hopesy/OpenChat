@@ -39,4 +39,8 @@
         <Resource Include="Assets\Images\openai.png"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ViewModels\Pages\" />
+    </ItemGroup>
+
 </Project>

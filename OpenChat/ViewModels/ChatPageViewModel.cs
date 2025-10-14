@@ -6,9 +6,9 @@ using OpenChat.Services;
 
 namespace OpenChat.ViewModels;
 
-public partial class ChatPageModel : ObservableObject
+public partial class ChatPageViewModel : ObservableObject
 {
-    public ChatPageModel(ChatStorageService chatStorageService)
+    public ChatPageViewModel(ChatStorageService chatStorageService)
     {
         _chatStorageService = chatStorageService;
         Messages.CollectionChanged += (s, e) => { OnPropertyChanged(nameof(LastMessage)); };

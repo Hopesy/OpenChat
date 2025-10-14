@@ -2,7 +2,7 @@
 
 namespace OpenChat.ViewModels
 {
-    public partial class NoteDataModel : ObservableObject
+    public partial class NoteMessageViewModel : ObservableObject
     {
         [ObservableProperty]
         private string _text = string.Empty;

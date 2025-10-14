@@ -4,7 +4,7 @@ using OpenChat.Models;
 
 namespace OpenChat.ViewModels
 {
-    public partial class ConfigPageModel : ObservableObject
+    public partial class ConfigPageViewModel : ObservableObject
     {
         [ObservableProperty]
         private ObservableCollection<ValueWrapper<string>> _systemMessages =

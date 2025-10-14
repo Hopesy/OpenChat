@@ -107,8 +107,8 @@ public class ChatStorageService : IDisposable
     // 【3】根据提供的会话名称创建新的聊天会话对象并立即保存到数据库中
     // public ChatStorageService SaveNewSession(string name)
     // {
-    //     var session = ChatSession.Create(name);
-    //     return SaveOrUpdateSession(session);
+    //     var sessionView = ChatSession.Create(name);
+    //     return SaveOrUpdateSession(sessionView);
     // }
     // 【4】保存或更新聊天会话到数据库：如果会话已存在则更新，不存在则插入新记录
     public ChatStorageService SaveOrUpdateSession(ChatSession session)

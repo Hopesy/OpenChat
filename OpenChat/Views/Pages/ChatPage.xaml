@@ -41,7 +41,7 @@
             <!-- 绑定的是ChatMessageModel列表，而不是ChatMessage -->
             <ItemsControl Name="messages" Padding="10,10,10,20"
                           d:ItemsSource="{d:SampleData ItemCount=5}"
-                          ItemsSource="{Binding ViewModel.Messages}">
+                          ItemsSource="{Binding ViewViewModel.Messages}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <!-- 启用虚拟化渲染提高性能 -->
@@ -92,11 +92,11 @@
                                     <MenuItem Header="{DynamicResource StrDelete}">
                                         <!-- 删除当前消息 -->
                                         <!-- Data通过代理传递当前Page的DataContext(其中定义了Command),而不是使用DataTemplate默认的上下文(单条数据) -->
-                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewModel.DeleteMessageCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrThis}" />
+                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewViewModel.DeleteMessageCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrThis}" />
                                         <!-- 删除此消息之前的所有消息 -->
-                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewModel.DeleteMessagesAboveCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrAllAbove}" />
+                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewViewModel.DeleteMessagesAboveCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrAllAbove}" />
                                         <!-- 删除此消息之后的所有消息 -->
-                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewModel.DeleteMessagesBelowCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrAllBelow}" />
+                                        <MenuItem Command="{Binding Source={StaticResource PageProxy}, Path=Data.ViewViewModel.DeleteMessagesBelowCommand}" CommandParameter="{Binding}" Header="{DynamicResource StrAllBelow}" />
                                     </MenuItem>
                                 </ContextMenu>
                             </controls:ChatBubble.ContextMenu>
@@ -111,7 +111,7 @@
             <!-- DataContext是后台cs文件，里面定义了ViewModel -->
             <TextBox Name="inputBox" Padding="5" utilities:FocusUtils.IsAutoLogicFocus="True"
                      AcceptsReturn="True" BorderThickness="0,1,0,0" FontSize="14"
-                     Text="{Binding ViewModel.InputBoxText, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ViewViewModel.InputBoxText, UpdateSourceTrigger=PropertyChanged}"
                      TextWrapping="Wrap">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Return" Command="{Binding ChatCommand}" Modifiers="Ctrl" />

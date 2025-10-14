@@ -6,7 +6,7 @@ namespace OpenChat.Services
 {
     public class NoteService
     {
-        public NoteDataModel Data { get; } = new NoteDataModel();
+        public NoteMessageViewModel MessageView { get; } = new NoteMessageViewModel();
 
         private CancellationTokenSource? cancellation;
 
@@ -15,8 +15,8 @@ namespace OpenChat.Services
             if (token.IsCancellationRequested)
                 return;
 
-            Data.Text = msg;
-            Data.Show = true;
+            MessageView.Text = msg;
+            MessageView.Show = true;
 
             try
             {
@@ -25,7 +25,7 @@ namespace OpenChat.Services
                 if (token.IsCancellationRequested)
                     return;
 
-                Data.Show = false;
+                MessageView.Show = false;
             }
             catch (TaskCanceledException) { }
         }
@@ -48,15 +48,15 @@ namespace OpenChat.Services
 
         public void Show(string msg)
         {
-            Data.Text = msg;
-            Data.Show = true;
+            MessageView.Text = msg;
+            MessageView.Show = true;
         }
 
         public void Close()
         {
             cancellation?.Cancel();
 
-            Data.Show = false;
+            MessageView.Show = false;
         }
     }
 }

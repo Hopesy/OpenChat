@@ -87,11 +87,11 @@ public class ChatService
     // public ChatSession NewSession(string name)
     // {
     //     // 创建新的聊天会话对象
-    //     var session = ChatSession.Create(name);
+    //     var sessionView = ChatSession.Create(name);
     //     // 将新会话保存到存储服务中
-    //     ChatStorageService.SaveOrUpdateSession(session);
+    //     ChatStorageService.SaveOrUpdateSession(sessionView);
     //     // 返回创建的会话对象
-    //     return session;
+    //     return sessionView;
     // }
     // 异步发送聊天消息并接收响应。sessionId会话的唯一标识符message用户发送的消息内容
     // messageHandler处理接收到的消息片段的回调函数
