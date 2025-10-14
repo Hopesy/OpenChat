@@ -51,7 +51,7 @@ public partial class ChatSessionModel : ObservableObject
     private ChatSession? storage;
     public bool IsReadOnly => !IsEditing;
     public ChatPage Page => ChatPageService.GetPage(Id);
-    public ChatPageModel PageModel => Page.ViewModel;
+    public ChatPageViewModel PageViewModel => Page.ViewViewModel;
     private static ChatPageService ChatPageService { get; } =
         App.GetService<ChatPageService>();
     private static ChatStorageService ChatStorageService { get; } =
