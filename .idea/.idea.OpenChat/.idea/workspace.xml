@@ -11,18 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9fae4809-858c-472a-b39b-0ba28abc5501" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Docs/Chat.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Docs/ChatPage流程详解.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Docs/Model.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Entitys/ChatDialogue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Entitys/ChatDialogue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Models/ChatMessageModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Models/ChatMessageModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Models/ChatSessionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Models/ChatSessionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/ChatService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Services/LanguageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/LanguageService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Services/NoteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/NoteService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Services/TitleGenerationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/TitleGenerationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Entitys/ChatMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Entitys/ChatMessage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Themes/Generic.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Themes/Generic.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +40,8 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/AppData/Local/Temp/SourceGeneratedDocuments/F52B745A84017BB0BEADAE72/CommunityToolkit.Mvvm.SourceGenerators/CommunityToolkit.Mvvm.SourceGenerators.RelayCommandGenerator/OpenChat.Views.Pages.ChatPage.ChatAsync.g.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/SourceGeneratedDocuments/F52B745A84017BB0BEADAE72/CommunityToolkit.Mvvm.SourceGenerators/CommunityToolkit.Mvvm.SourceGenerators.RelayCommandGenerator/OpenChat.Views.Pages.MainPage.SwitchPageToCurrentSession.g.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/OpenChat/Services/NoteService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/OpenChat/ViewModels/Pages/ChatPageViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/OpenChat/Views/AppWindow.xaml.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -120,6 +113,8 @@
       <workItem from="1760449523660" duration="5524000" />
       <workItem from="1760492237434" duration="17408000" />
       <workItem from="1760536865235" duration="157000" />
+      <workItem from="1760540570467" duration="3013000" />
+      <workItem from="1760544750537" duration="213000" />
     </task>
     <servers />
   </component>

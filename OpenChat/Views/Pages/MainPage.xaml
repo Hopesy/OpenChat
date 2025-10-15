@@ -25,26 +25,46 @@
         <utilities:BindingProxy x:Key="PageSelf" Data="{Binding}" />
     </Page.Resources>
     <Page.InputBindings>
-        <KeyBinding Key="R" Command="{Binding ResetChatCommand}" Modifiers="Ctrl" />
-        <KeyBinding Key="T" Command="{Binding NewSessionCommand}" Modifiers="Ctrl" />
-        <KeyBinding Key="N" Command="{Binding NewSessionCommand}" Modifiers="Ctrl" />
-        <KeyBinding Key="W" Command="{Binding DeleteCurrentSessionCommand}" Modifiers="Ctrl" />
-        <KeyBinding Key="K" Command="{Binding SwitchToPreviousSessionCommand}" Modifiers="Ctrl" />
-        <KeyBinding Key="J" Command="{Binding SwitchToNextSessionCommand}" Modifiers="Ctrl" />
-        <KeyBinding Key="Tab" Command="{Binding CycleSwitchToPreviousSessionCommand}" Modifiers="Ctrl+Shift" />
-        <KeyBinding Key="Tab" Command="{Binding CycleSwitchToNextSessionCommand}" Modifiers="Ctrl" />
+        <KeyBinding Key="R"
+                    Command="{Binding ResetChatCommand}"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="T"
+                    Command="{Binding NewSessionCommand}"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="N"
+                    Command="{Binding NewSessionCommand}"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="W"
+                    Command="{Binding DeleteCurrentSessionCommand}"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="K"
+                    Command="{Binding SwitchToPreviousSessionCommand}"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="J"
+                    Command="{Binding SwitchToNextSessionCommand}"
+                    Modifiers="Ctrl" />
+        <KeyBinding Key="Tab"
+                    Command="{Binding CycleSwitchToPreviousSessionCommand}"
+                    Modifiers="Ctrl+Shift" />
+        <KeyBinding Key="Tab"
+                    Command="{Binding CycleSwitchToNextSessionCommand}"
+                    Modifiers="Ctrl" />
     </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!-- 上部标题栏和按钮 -->
         <Grid Grid.Row="0">
-            <Border Padding="5" BorderBrush="{DynamicResource GeneralBorder}" BorderThickness="0,0,0,1" />
+            <Border Padding="5"
+                    BorderBrush="{DynamicResource GeneralBorder}"
+                    BorderThickness="0,0,0,1" />
             <Grid>
-                <TextBlock FontSize="{DynamicResource ExtremLargeFontSize}" Foreground="{DynamicResource FontForeground}" Text="{DynamicResource StrChat}" />
+                <TextBlock FontSize="{DynamicResource ExtremLargeFontSize}"
+                           Foreground="{DynamicResource FontForeground}"
+                           Text="{DynamicResource StrChat}" />
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <StackPanel.Resources>
                         <Style TargetType="Border">
@@ -80,8 +100,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" MinWidth="80" />
                 <ColumnDefinition Width="2" />
-                <ColumnDefinition Width="139*" />
-                <ColumnDefinition Width="590*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!-- 左侧消息列表 -->
             <Grid Grid.Column="0">
@@ -89,8 +108,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ScrollViewer Name="sessionsScrollViewer" Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
-                              VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Name="sessionsScrollViewer" Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <!-- Stretch控件会水平拉伸以填满其父容器分配的可用空间 -->
                     <!-- AppGlobalData属性定义在后台文件中 -->
                     <!-- Sessions=ObservableCollection<ChatSessionModel;SelectedSession=ChatSessionModel -->
@@ -145,13 +163,17 @@
                                     <ContextMenu x:Key="SessionContextMenu">
                                         <MenuItem Command="{Binding StartEditCommand}" Header="{DynamicResource StrEdit}" />
                                         <MenuItem Command="{Binding ConfigCommand}" Header="{DynamicResource StrConfig}" />
-                                        <MenuItem Command="{Binding Data.DeleteSessionCommand, Source={StaticResource PageSelf}}" CommandParameter="{Binding}" Header="{DynamicResource StrDelete}" />
+                                        <MenuItem Command="{Binding Data.DeleteSessionCommand, Source={StaticResource PageSelf}}"
+                                                  CommandParameter="{Binding}"
+                                                  Header="{DynamicResource StrDelete}" />
                                     </ContextMenu>
                                 </DataTemplate.Resources>
                                 <StackPanel Background="Transparent" ContextMenu="{StaticResource SessionContextMenu}">
                                     <StackPanel.InputBindings>
                                         <!-- 鼠标中键触发删除命令 -->
-                                        <MouseBinding Command="{Binding Data.DeleteSessionCommand, Source={StaticResource PageSelf}}" CommandParameter="{Binding}" MouseAction="MiddleClick" />
+                                        <MouseBinding Command="{Binding Data.DeleteSessionCommand, Source={StaticResource PageSelf}}"
+                                                      CommandParameter="{Binding}"
+                                                      MouseAction="MiddleClick" />
                                     </StackPanel.InputBindings>
                                     <!-- IsHitTestVisible根据编辑状态控制是否可交互 -->
                                     <!-- IsReadOnly根据只读状态控制编辑功能 -->
@@ -232,7 +254,7 @@
                 </GridSplitter.Style>
             </GridSplitter>
             <!-- 右侧Frame承载聊天页面 -->
-            <Frame Grid.Column="2" Grid.ColumnSpan="2"
+            <Frame Grid.Column="2"
                    Content="{Binding ViewModel.CurrentChat}"
                    NavigationUIVisibility="Hidden" />
         </Grid>

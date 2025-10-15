@@ -18,6 +18,7 @@ namespace OpenChat.Entitys
         //ChatMessage表存储到数据库时的主键
         [BsonId]
         public Guid Id { get; }
+        //外键
         public Guid SessionId { get; }
         public string Role { get; set; }
         public string Content { get; set; }

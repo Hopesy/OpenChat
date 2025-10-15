@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:OpenChat.Controls"
                     xmlns:local="clr-namespace:OpenChat"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
-
     <sys:Double x:Key="NormalFontSize">14</sys:Double>
     <sys:Double x:Key="SmallFontSize">12</sys:Double>
     <sys:Double x:Key="LargeFontSize">16</sys:Double>

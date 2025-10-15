@@ -33,6 +33,7 @@ public partial class App : Application
         .ConfigureServices((context, services) =>
         {
             // 程序托管服务(包括了初始导航，显示窗口等)
+            // 
             services.AddHostedService<ApplicationHostService>();
             // 添加基础服务
             services.AddSingleton<AppGlobalData>();
