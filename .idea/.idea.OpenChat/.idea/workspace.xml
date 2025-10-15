@@ -11,18 +11,18 @@
   <component name="ChangeListManager">
     <list default="true" id="9fae4809-858c-472a-b39b-0ba28abc5501" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models目录重构建议.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/Chat.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/ChatPage流程详解.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/Model.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Entitys/ChatDialogue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Entitys/ChatDialogue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Models/ChatMessageModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Models/ChatMessageModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenChat/Models/ChatSessionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Models/ChatSessionModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenChat/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/ChatService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/ViewModels/Pages/ChatPageViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/ViewModels/Pages/ChatPageViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Views/AppWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/AppWindow.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Dialogs/ChatSessionConfigDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Dialogs/ChatSessionConfigDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Services/LanguageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/LanguageService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Services/NoteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/NoteService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenChat/Services/TitleGenerationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/TitleGenerationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/ChatPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Views/Pages/MainPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ViewModel命名和职责分析.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +118,8 @@
       <workItem from="1760409411993" duration="8150000" />
       <workItem from="1760428289346" duration="2469000" />
       <workItem from="1760449523660" duration="5524000" />
+      <workItem from="1760492237434" duration="17408000" />
+      <workItem from="1760536865235" duration="157000" />
     </task>
     <servers />
   </component>

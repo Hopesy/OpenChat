@@ -10,11 +10,13 @@ using OpenChat.ViewModels.Pages;
 namespace OpenChat.Views.Pages;
 
 // 主页面逻辑交互类
+// 【重点】主要是实现左侧会话列表展示相关的，比如新建会话，上一个会话，下一个会话等
 public partial class MainPage : Page
 {
     public MainPage(AppWindow appWindow, MainPageViewModel viewModel, AppGlobalData appGlobalData,
         PageService pageService, NoteService noteService, ChatService chatService, ChatPageService chatPageService,
-        ChatStorageService chatStorageService, ConfigurationService configurationService, SmoothScrollingService smoothScrollingService)
+        ChatStorageService chatStorageService, ConfigurationService configurationService,
+        SmoothScrollingService smoothScrollingService)
     {
         // 初始化各个服务和数据模型
         AppWindow = appWindow;
@@ -78,13 +80,12 @@ public partial class MainPage : Page
             // 获取当前选中会话的唯一标识符
             var sessionId = AppGlobalData.SelectedSession.Id;
 
-            // 取消正在进行的聊天请求
+            // 取消正在进行的聊天请求(调用cts.cancel取消API请求)
             ChatService.Cancel();
             // 清除该会话的所有消息记录
             ChatStorageService.ClearMessageBySession(sessionId);
             // 清空当前聊天视图模型中的消息列表
             ViewModel.CurrentChat?.ViewModel.Messages.Clear();
-
             // 显示重置成功的提示信息，持续1.5秒
             await NoteService.ShowAndWaitAsync("Chat has been reset.", 1500);
         }
@@ -123,18 +124,15 @@ public partial class MainPage : Page
             return;
         }
         // 获取要删除会话在列表中的索引位置
-        var index =
-            AppGlobalData.Sessions.IndexOf(session);
+        var index = AppGlobalData.Sessions.IndexOf(session);
         // 计算删除后应该选中的新会话索引（选择前一个会话，如果删除的是第一个则选择第一个）
-        var newIndex =
-            Math.Max(0, index - 1);
+        var newIndex = Math.Max(0, index - 1);
         // 从聊天页面服务中移除该会话对应的页面
         ChatPageService.RemovePage(session.Id);
         // 从存储中删除该会话
         ChatStorageService.DeleteSession(session.Id);
         // 从全局会话列表中移除该会话
         AppGlobalData.Sessions.Remove(session);
-
         // 设置新的选中会话
         AppGlobalData.SelectedSession = AppGlobalData.Sessions[newIndex];
     }

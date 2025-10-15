@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-
 namespace OpenChat.Services
 {
-
-
     public class LanguageService
     {
         private static string resourceUriPrefix = "pack://application:,,,";
