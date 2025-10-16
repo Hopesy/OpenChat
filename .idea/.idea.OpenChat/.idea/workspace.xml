@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fae4809-858c-472a-b39b-0ba28abc5501" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenChat/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Services/LanguageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Services/LanguageService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenChat/Themes/Languages/_base.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/OpenChat/Themes/Languages/_base.xaml" afterDir="false" />
-    </list>
+    <list default="true" id="9fae4809-858c-472a-b39b-0ba28abc5501" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,8 +111,17 @@
       <workItem from="1760544750537" duration="213000" />
       <workItem from="1760605436903" duration="1179000" />
       <workItem from="1760617392866" duration="870000" />
-      <workItem from="1760623452051" duration="1388000" />
+      <workItem from="1760623452051" duration="1594000" />
     </task>
+    <task id="LOCAL-00001" summary="333">
+      <option name="closed" value="true" />
+      <created>1760631341888</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1760631341888</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +131,8 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="333" />
+    <option name="LAST_COMMIT_MESSAGE" value="333" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
